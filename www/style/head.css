@@ -1,0 +1,60 @@
+.head {
+    height: 70px;
+    width: 100%;
+    padding: 10px 30px;
+    gap: 50px;
+    background-color: rgba(240, 240, 240, .5);
+}
+
+.head__logoHolder img{
+    object-fit: contain;
+    height: 70px;
+    opacity: 50%;
+}
+
+.head__logoHolder:hover img {
+    opacity: 100%;
+}
+
+.head__search {
+    width: 100%;
+}
+
+.head__searchInput {
+    width: 100%;
+    height: 35px;
+    padding: 10px;
+    border: solid #ccc 1px;
+} 
+
+.head__searchInput:focus {
+    outline: solid #aaa 1px;
+}
+
+.head__searchBtn {
+    width: 80px;
+    height: 35px;
+    background-color: rgba(216, 211, 204, 0.958);
+    border: 1px solid #ccc;
+    color: #666;
+    padding: 5px;
+}
+
+.head__searchBtn:hover {
+    background-color: #ddd;
+}
+
+.head__profile a{
+    gap: 10px;
+    width: 150px;
+}
+
+.head__profileImg {
+    object-fit: contain;
+    height: 35px;
+    opacity: .5;
+}
+
+.head__profileName {
+    text-decoration: none !important;
+}

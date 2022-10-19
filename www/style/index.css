@@ -1,0 +1,13 @@
+.main {
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.main__categories {
+    width: 400px;
+    padding: 50px;
+}
+
+.main__grid {
+    width: 100%;
+}
