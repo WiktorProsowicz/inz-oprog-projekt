@@ -1,3 +1,8 @@
+<?php 
+
+?>
+
+
 <div class="w-100">
     <div class="head d-flex justify-content-between align-items-center">
 
@@ -15,9 +20,29 @@
         <div class="head__profile">
 
             <a href="#" class="d-flex align-items-center justify-content-center link-secondary">
-                <img class="head__profileImg" src="/media/user_profile_template.png" alt="user profile img"/>
+                <img class="head__profileImg" src=<?php 
 
-                <span class="head__profileName">zaloguj się</span>
+                    if(isset($_SESSION["user_name"])) {
+                        
+                    }
+
+                    else {
+                        echo "/media/user_profile_template.png";
+                    }
+
+                ?> alt="user profile img"/>
+
+                <span class="head__profileName"><?php 
+                
+                    if(isset($_SESSION["user_name"])) {
+                            
+                    }
+
+                    else {
+                        echo "/media/user_profile_template.png";
+                    }
+
+                ?></span>
             </a>
 
         </div>

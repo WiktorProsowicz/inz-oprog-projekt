@@ -4,10 +4,22 @@
 }
 
 .main__categories {
-    width: 400px;
-    padding: 50px;
+    width: 300px;
 }
 
 .main__grid {
-    width: 100%;
+    /* width: 100%; */
+}
+
+.main__categoriesList {
+    margin: 0 auto;
+    gap: 15px;
+}
+
+.main__categoriesList li:hover{
+    background-color: #eee;;
+}
+
+.main__categoriesList li::marker {
+    content: "";
 }

@@ -49,6 +49,10 @@
     width: 150px;
 }
 
+.head__profile a:hover .head__profileImg {
+    opacity: 1; 
+}
+
 .head__profileImg {
     object-fit: contain;
     height: 35px;
