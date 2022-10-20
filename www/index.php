@@ -42,6 +42,10 @@
                 text-decoration: none;
                 color: inherit;
             }
+
+            li::marker {
+                content: "";
+            }
         </style>
         <link href="/style/head.css" rel="stylesheet"/>
         <link href="/style/index.css" rel="stylesheet"/>

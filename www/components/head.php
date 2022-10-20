@@ -19,31 +19,24 @@
 
         <div class="head__profile">
 
-            <a href="#" class="d-flex align-items-center justify-content-center link-secondary">
-                <img class="head__profileImg" src=<?php 
+            
 
-                    if(isset($_SESSION["user_name"])) {
-                        
-                    }
+            <?php 
+            
+                if( !isset($_SESSION["user_username"]) ) {
+                    echo '
+                    <a href="#" class="d-flex align-items-center justify-content-center link-secondary">
+                        <img class="head__profileImg" src="/media/user_profile_template.png" alt="user profile img"/>
+        
+                        <span class="head__profileName">zaloguj się</span>
+                    </a>
+                    ';
+                }
+                else {
+                    
+                }
 
-                    else {
-                        echo "/media/user_profile_template.png";
-                    }
-
-                ?> alt="user profile img"/>
-
-                <span class="head__profileName"><?php 
-                
-                    if(isset($_SESSION["user_name"])) {
-                            
-                    }
-
-                    else {
-                        echo "/media/user_profile_template.png";
-                    }
-
-                ?></span>
-            </a>
+            ?>
 
         </div>
 

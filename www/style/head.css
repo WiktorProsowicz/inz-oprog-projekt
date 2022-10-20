@@ -50,7 +50,7 @@
 }
 
 .head__profile a:hover .head__profileImg {
-    opacity: 1; 
+    opacity: .8; 
 }
 
 .head__profileImg {
