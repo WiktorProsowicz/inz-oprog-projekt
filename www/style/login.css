@@ -1,0 +1,43 @@
+.login {
+    width: 50%;
+    gap: 50px;
+}
+
+.login__form {
+    gap: 20px;
+    width: 100%;
+}
+
+.login__segment input {
+    width: 100%;
+}
+
+.login__segment label {
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.login__noAccount {
+    gap: 10px;
+}
+
+.login__segment {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+    width: 50%;
+}
+
+.login__formSubmit {
+    width: 40%;
+    height: 40px;
+    background-color: rgba(216, 211, 204, 0.958);
+    border: 1px solid #ccc;
+    color: #666;
+    padding: 5px;
+}
+
+.login__formSubmit:hover {
+    background-color: #ddd;
+}

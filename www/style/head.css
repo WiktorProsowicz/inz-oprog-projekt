@@ -44,21 +44,84 @@
     background-color: #ddd;
 }
 
-.head__profile a{
-    gap: 10px;
-    width: 150px;
+.head__profile {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
-.head__profile a:hover .head__profileImg {
+.head__profileBanner{
+    gap: 10px;
+    min-width: 150px;
+}
+
+.head__profileBanner {
+    cursor: pointer;
+}
+
+.head__profileBanner:hover .head__profileImgTemplate {
     opacity: .8; 
 }
 
-.head__profileImg {
+.head__profileImgTemplate {
     object-fit: contain;
     height: 35px;
     opacity: .5;
 }
 
+.head__profileImg {
+    object-fit: contain;
+    height: 50px;
+    max-width: 70px;
+    border-radius: 10%;
+}
+
 .head__profileName {
     text-decoration: none !important;
+    overflow: hidden;
+}
+
+.head__profile:hover > .head__profileBanner .head__profileArrow {
+    transform: rotate(180deg);
+}
+
+.head__profileArrow {
+    height: 1em;
+    transition: all .1s linear;
+}
+
+.head__profilePopup {
+    position: absolute;
+    width: 150px;
+    top:  50px;
+    right: 0px;
+    background-color: white;
+    display: none;
+    background-color: rgb(247, 240, 240);
+    border: 1px solid #ccc;
+}
+
+.head__profile:hover .head__profilePopup {
+    display: block;
+}
+
+.head__profilePopup > ul {
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.head__profilePopup > ul > hr {
+    margin: 0;
+}
+
+.head__profilePopup > ul > li {
+    width: 100%;
+    text-align: center;
+    padding: 0 5px;
+}
+
+.head__profilePopup > ul > li:hover {
+    background-color: #ddd;
 }

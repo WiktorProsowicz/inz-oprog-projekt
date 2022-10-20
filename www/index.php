@@ -2,6 +2,11 @@
 
     session_start();
 
+    // $_SESSION["user_username"] = "kerfuś_UwU";
+    // $_SESSION["user_profileimgsrc"] = "https://preview.redd.it/u6l1kz9sbmu91.jpg?auto=webp&s=126d0cf3c392e9fd0f704cab5e7bb154072d1fcb";
+
+    // session_destroy();
+
 ?>
 
 
@@ -29,24 +34,7 @@
         <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- custom stylesheets -->
-        <style>
-            a {
-                text-decoration: none !important;
-            }
-
-            * {
-                box-sizing: border-box;
-            }
-
-            a, a:hover {
-                text-decoration: none;
-                color: inherit;
-            }
-
-            li::marker {
-                content: "";
-            }
-        </style>
+        <link href="/style/clearfix.css" rel="stylesheet"/>
         <link href="/style/head.css" rel="stylesheet"/>
         <link href="/style/index.css" rel="stylesheet"/>
         <link href="/style/gridtile.css" rel="stylesheet"/>

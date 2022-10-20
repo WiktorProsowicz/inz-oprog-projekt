@@ -1,0 +1,16 @@
+a {
+    text-decoration: none !important;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+li::marker {
+    content: "";
+}
