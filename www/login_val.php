@@ -7,38 +7,49 @@
 
     $_SESSION["login_passedemail"] = $email;
 
-    // texts to be displayed if validation goes wrong
+    require_once("./connect.php");
 
-    if($email == "") {
-        $_SESSION["email_msg"] = "Email nie może być pusty.";
+    try {
+        $connection = connect_to_database();
+    }
+    catch(Exception $e) {
+        die("Nie udało się połączyć z bazą.");
+    }
+
+    if($connection->connect_error) {
+        die("Nie udało się połączyć z bazą.");
+    }
+
+    $query = sprintf("SELECT * FROM users WHERE `email`='%s'", $connection->real_escape_string($email));
+    $result = $connection->query($query);
+
+    if($result->num_rows == 0) {
+        $_SESSION["login_msg"] = "Użytkownik o podanym adresie email nie istnieje.";
+
         header("Location: login.php");
+        $result->free_result();
+        exit();
     }
 
-    else if(!filter_var($email, FILTER_VALIDATE_EMAIL) || filter_var($email, FILTER_SANITIZE_EMAIL) != $email) {
-        $_SESSION["email_msg"] = "Podany adres email jest niepoprawny.";
+    $user_row = $result->fetch_assoc();
+
+    if(!password_verify($passwd, $user_row["password"])) {
+        $_SESSION["login_msg"] = "Podane hasło jest nieprawidłowe.";
+
         header("Location: login.php");
+        $result->free_result();
+        exit();
     }
 
-    else if($passwd == "") {
-        $_SESSION["passwd_msg"] = "Hasło nie może być puste.";
-        header("Location: login.php");
-    }
+    $_SESSION["user_username"] = $user_row["username"];
+    $_SESSION["user_id"] = $user_row["id"];
+    $_SESSION["user_profileimg"] = $user_row["profileimg"];
+    $_SESSION["user_blocked"] = $user_row["blocked"];
+    $_SESSION["user_admin"] = $user_row["admin"];
 
-    else if(!preg_match('/[a-zA-Z0-9]+/', $passwd)) {
-        $_SESSION["passwd_msg"] = "Hasło może składać się wyłącznie z małych liter, wielkich liter i cyfr.";
-        header("Location: login.php");
-    }
+    $result->free_result();
 
-    else if(!preg_match('/[a-zA-Z0-9]{6,}/', $passwd)) {
-        $_SESSION["passwd_msg"] = "Hasło musi się składać z conajmniej 6 znaków.";
-        header("Location: login.php");
-    }
-
-    else{
-        // $email = htmlentities($email, ENT_QUOTES, "utf-8");
-
-        
-    }
-
+    unset($_SESSION["login_passedemail"]);
+    header("Location: /index.php");
 
 ?>

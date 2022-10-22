@@ -18,9 +18,16 @@
 
             if(isset($_SESSION["user_username"])) {
 
+                if($_SESSION["user_profileimg"] != null) {
+                    $img_tag = '<img class="head__profileImg" src="data:image/jpg;charset=utf8;base64,' .$_SESSION["user_profileimg"]. '" alt="user profile img"/>';
+                }
+                else {
+                    $img_tag = '<img class="head__profileImgTemplate" src="/media/user_profile_template.png" alt="user profile img"/>';
+                }
+
                 echo '
                     <div class="head__profileBanner d-flex align-items-center justify-content-center link-secondary">
-                        <img class="head__profileImg" src="' .$_SESSION["user_profileimgsrc"]. '" alt="user profile img"/>
+                        '.$img_tag.'
                 
                         <span class="head__profileName user-select-none text-center">' .$_SESSION["user_username"]. '</span>
 
@@ -33,9 +40,9 @@
 
                         <ul class="d-flex flex-column justify-content-center p-2">
 
-                            <li><a href="#">Mój profil</a></li>
+                            <li><a href="/profile.php?u='.$_SESSION["user_id"].'">Mój profil</a></li>
                             <hr />
-                            <li><a href="#">Wyloguj</a></li>
+                            <li><a href="/logout.php">Wyloguj</a></li>
 
                         </ul>
 

@@ -48,36 +48,27 @@
 
             <form class="login__form d-flex flex-column justify-content-center align-items-center h-100" action="/login_val.php" method="post">
 
+                <?php 
+                    
+                    if(isset($_SESSION["login_msg"])) {
+                        echo '<span class="text-danger mb-2">' .$_SESSION["login_msg"]. '</span>';
+                        unset($_SESSION["login_msg"]);
+                    }
+
+                ?>
+
                 <div class="login__segment">
-                    <label to="loginInput">adres email</label>
+                    <label to="loginInput">Adres email</label>
 
                     <!-- email i preserved if the user typed it before -->
                     <input type="text" id="loginInput" name="email" value="<?php 
                         if(isset($_SESSION["login_passedemail"])) echo $_SESSION["login_passedemail"];
                         ?>"/>
-
-                    <?php 
-                    
-                        if(isset($_SESSION["email_msg"])) {
-                            echo '<span class="text-danger">' .$_SESSION["email_msg"]. '</span>';
-                            unset($_SESSION["email_msg"]);
-                        }
-
-                    ?>
                 </div>
 
                 <div class="login__segment">
-                    <label to="passwdInput">hasło</label>
+                    <label to="passwdInput">Hasło</label>
                     <input type="password" id="passwdInput" name="passwd"/>
-
-                    <?php 
-                    
-                        if(isset($_SESSION["passwd_msg"])) {
-                            echo '<span class="text-danger">' .$_SESSION["passwd_msg"]. '</span>';
-                            unset($_SESSION["passwd_msg"]);
-                        }
-
-                    ?>
                 </div>
 
                 <input type="submit" class="login__formSubmit" value="Zaloguj"/>
