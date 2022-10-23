@@ -120,6 +120,6 @@
     $_SESSION["user_username"] = $username;
     $_SESSION["user_profileimg"] = null;
 
-    header("Location: profile.php?u=$user_id");
+    header("Location: profile.php?u=$username");
 
 ?>

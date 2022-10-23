@@ -1,0 +1,74 @@
+.profile__profileimg {
+    width: 250px;
+    max-height: 300px;
+}
+
+.profile__profileimgSpace {
+    position: relative;
+}
+
+.profile__profileimgSpace:hover .profile__profileimg {
+    opacity: .5;
+}
+
+.profile__profileimgSpace:hover .profile__profileimgTrashHolder{
+    display: block;
+    cursor: pointer;
+}
+
+.profile__profileimgTrashHolder {
+    position: absolute;
+    padding: 10px;
+    border: none;
+    background-color: rgb(155, 78, 78);
+    color: white;
+    border-radius: 10%;
+    right: 5px;
+    bottom: 5px;
+    display: none;
+    /* width: 30px; */
+}
+
+.profile__profileimgTrash {
+    
+}
+
+.profile__infoList {
+    gap: 20px;
+}
+
+.profile__profileimgHolder {
+    gap: 20px;
+}
+
+.profile__profileimgInput ~ label:hover {
+    cursor: pointer;
+}
+
+.profile__profileimgInput ~ label img {
+    height: 1.5em;
+    margin-right: 7px;
+}
+
+.profile__profileimgInput::-webkit-file-upload-button{
+    display: none;
+}
+
+.profile__profileimgInput {
+    color: var(--bs-secondary);
+}
+
+.profile__profileimgForm {
+    gap: 10px;
+}
+
+.profile__profileimgFormSubmit {
+    background-color: rgba(216, 211, 204, 0.958);
+    border :none;
+    padding: 5px;
+    color: #444;
+}
+
+.profile__profileimgFormSubmit:hover {
+    background-color: #ddd;
+}

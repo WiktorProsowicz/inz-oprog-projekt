@@ -40,7 +40,7 @@
 
                         <ul class="d-flex flex-column justify-content-center p-2">
 
-                            <li><a href="/profile.php?u='.$_SESSION["user_id"].'">Mój profil</a></li>
+                            <li><a href="/profile.php?u='.$_SESSION["user_username"].'">Mój profil</a></li>
                             <hr />
                             <li><a href="/logout.php">Wyloguj</a></li>
 
