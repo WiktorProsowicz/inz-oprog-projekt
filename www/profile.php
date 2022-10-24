@@ -8,11 +8,17 @@
         $connection = connect_to_database();
     }
     catch(Exception $e) {
-        die("Nie udało się połączyć z bazą.");
+        die('<h1 class="d-flex justify-content-center mt-5">
+                <span class="fs-4 me-2">Nie udało się połączyć z bazą.</span>
+                <a class="link-secondary fs-4" href="/index.php">Wróć do strony głównej.</a>
+            </h1>');
     }
 
     if($connection->connect_error) {
-        die("Nie udało się połączyć z bazą.");
+        die('<h1 class="d-flex justify-content-center mt-5">
+                <span class="fs-4 me-2">Nie udało się połączyć z bazą.</span>
+                <a class="link-secondary fs-4" href="/index.php">Wróć do strony głównej.</a>
+            </h1>');
     }
 
     
@@ -47,14 +53,26 @@
             $profile_viewed_id = $row["id"];
             $profile_viewed_createdaccount = $row["created_account"];
             $profile_viewed_admin = $row["admin"];
+            $profile_viewed_description = htmlentities($row["description"]);
             $profile_viewed_profileimg = base64_encode($row["profile_img"]);
 
             $result->free_result();
 
+            // get number of posts
             $query = sprintf("SELECT COUNT(*) FROM posts WHERE `author_id` = '%s'", $profile_viewed_username);
             $result = $connection->query($query);
 
             $profile_viewed_nposts = $result->fetch_array()[0];
+            $result->free_result();
+
+            // get number of watchers and watched by the user
+            $query = sprintf("SELECT COUNT(*) FROM watchers WHERE `user_id` = '%s'
+                            UNION ALL
+                            SELECT COUNT(*) FROM watchers WHERE `watcher_id` = '%s'", $profile_viewed_username, $profile_viewed_username);
+            $result = $connection->query($query);
+
+            $profile_viewed_nwatchers = $result->fetch_array()[0];
+            $profile_viewed_nwatches = $result->fetch_array()[0];
             $result->free_result();
         }
     }
@@ -112,10 +130,21 @@
             }
         ?>
 
-        <div class="profile container-fluid pt-5">
+        <div class="profile container-fluid">
             
-            <div class="row w-75 border mx-auto p-5">
-                <div class="profile__profileimgHolder col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <div class="row w-75 border border-top-0 mx-auto p-5 bg-light" style="border-radius: 0 0 50px 50px;">
+
+                <?php 
+                
+                    if(isset($_SESSION["user_id"]) && $profile_viewed_id == $_SESSION["user_id"]) {
+                        echo '<div class="profile__settingsHolder">
+                            <a href="/profile_settings.php"><img src="/media/settings.png"/></a>
+                        </div>';
+                    }
+                
+                ?>
+
+                <div class="profile__profileimgHolder col-md-6 d-flex flex-column justify-content-start align-items-center">
                     <?php 
                         if($profile_viewed_profileimg == null){
                             echo '<img src="/media/user_profile_template.png" class="profile__profileimg" />'; 
@@ -125,7 +154,7 @@
                             if(isset($_SESSION["user_id"]) && $profile_viewed_id == $_SESSION["user_id"]) {
                                 echo '<div class="profile__profileimgSpace">';
                                     echo '<img src="data:image/jpg;charset=utf8;base64,' . $profile_viewed_profileimg . '" class="profile__profileimg" />';
-                                    echo '<form  action="/user_bound_scripts.php" method="post">
+                                    echo '<form action="/user_bound_scripts.php" method="post">
                                         <input type="submit" name="profile_trash" value="Usuń" class="profile__profileimgTrashHolder"/>
                                     </form>';
                                 echo '</div>';
@@ -165,25 +194,54 @@
                         
                         ?></h3></li>
 
-                        <li><span>Na forum od: <span class="text-secondary ms-3"><?php echo $profile_viewed_createdaccount;?></span></span></li>
+                        <li><span>Na forum od: <span class="text-secondary ms-3 fw-bold"><?php echo $profile_viewed_createdaccount;?></span></span></li>
 
-                        <li><span>Typ konta: <span class="text-secondary ms-3"><?php 
+                        <li><span>Typ konta: <span class="text-secondary ms-3 fw-bold"><?php 
                             if(!$profile_viewed_admin) {
                                 echo "zwykły użytkownik";   
                             }
                             else {
-                                echo "admin";
+                                echo '<span class="fw-bold">admin</span>';
                             }
                         
                         ?></span></span></li>
 
-                        <li><span>Liczba postów: <span class="text-secondary ms-3"><?php echo $profile_viewed_nposts;?></span></span></li>
+                        <li><span>Liczba postów: <span class="text-secondary ms-3 fw-bold"><?php echo $profile_viewed_nposts;?></span></span></li>
 
+                        <li>
+                            <div class="d-flex justify-content-start" style="gap: 20px;">
+                                <?php 
+                                    echo '<span>Obserwujących: <span class="text-secondary ms-3 fw-bold">'.$profile_viewed_nwatchers.'</span></span> 
+                                    <span>Obserwuje: <span class="text-secondary ms-3 fw-bold">'.$profile_viewed_nwatches.'</span></span>';
+                                ?>
+                            </div>
+                        </li>
+                        
+                        <li class="mt-3">
+                            <div class="d-flex justify-content-center flex-column" style="gap: 10px;">
+                                <?php 
+                                    echo '<span>Opis użytkownika: </span> 
+                                    <span class="text-secondary fw-bold">'.$profile_viewed_description.'</span>';
+                                ?>
+                            </div>
+                        </li>
 
                     </ul>
 
                 </div>
             </div>
+
+            <?php 
+                if(isset($_SESSION["user_id"]) && $profile_viewed_id == $_SESSION["user_id"]) {
+                    echo '<div class="row my-5">
+
+                        <a href="/edit_post.php" class="profile__addNewPost d-flex justify-content-center align-items-center mx-auto rounded">
+                            <span class="me-1">Dodaj nowy post</span><img src="/media/plus_icon.png"/>
+                        </a>
+
+                    </div>';
+                }
+            ?>
 
         <div>
 

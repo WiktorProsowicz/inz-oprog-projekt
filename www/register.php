@@ -122,7 +122,7 @@
 
             <div class="register__noAccount w-100 d-flex justify-content-center">
                 <span>Masz już konto?</span>
-                <a href="/register.php" class="link-secondary">Zaloguj się</a>
+                <a href="/login.php" class="link-secondary">Zaloguj się</a>
             </div>
 
         </div>

@@ -72,3 +72,42 @@
 .profile__profileimgFormSubmit:hover {
     background-color: #ddd;
 }
+
+.profile > .row {
+    position: relative;
+}
+
+.profile__settingsHolder {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    transition: all .1s linear;
+}
+
+.profile__settingsHolder:hover {
+    transform: scale(1.1);
+}
+
+.profile__settingsHolder  img {
+    width: 100%;
+    height: 100%;
+}
+
+.profile__addNewPost {
+    width: 50%;
+    padding: 10px;
+    background-color: rgba(216, 211, 204, 0.958);
+    color: black;
+}
+
+.profile__addNewPost:hover {
+    background-color: #ddd;
+}
+
+.profile__addNewPost img{
+    height: 1.2em;
+    width: 1.2em;
+}

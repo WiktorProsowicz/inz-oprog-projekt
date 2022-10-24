@@ -104,8 +104,8 @@
     unset($_SESSION["register__passedusername"]);
 
     $query = sprintf("INSERT INTO users 
-    (`username`, `email`, `password`, `created_account`, `blocked`, `admin`) 
-    VALUES ('%s', '%s', '%s', '%s', false, false);", 
+    (`username`, `email`, `password`, `created_account`, `blocked`, `admin`, `description`) 
+    VALUES ('%s', '%s', '%s', '%s', false, false, 'Jestem użytkownikiem forum :)');", 
     $username, $email, $connection->real_escape_string(password_hash($passwd, PASSWORD_DEFAULT)), date("Y-m-j", time()));
     $connection->query($query);
 

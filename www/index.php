@@ -90,19 +90,16 @@
 
                     //hardcoded tiles
                     $tiles = array(
-                        array("My own poem", 'środowa noc to wody czas to jest wooood czassssss to zloty wez jak ne masz to miej', array("kapitan bomba", "picie", "calkohol")),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', array("ff", "wf", "fqwe")),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', array("ff", "wf", "fqwe")),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', array("ff", "wf", "fqwe")),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', array("ff", "wf", "fqwe")),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', array("ff", "wf", "fqwe")),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', array("ff", "wf", "fqwe"))
+                        array("My own poem", 'środowa noc to wody czas to jest wooood czassssss to zloty wez jak ne masz to miej', "autorr"),
+                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
+                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
+                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g")
                     );
 
                     foreach($tiles as $tile) {
                         $tile_title = $tile[0];
                         $tile_short = $tile[1];
-                        $tile_tags = $tile[2];
+                        $tile_author = $tile[2];
                         include "./components/grid_tile.php";
                     }
                 

@@ -1,5 +1,5 @@
 <div class="w-100">
-    <div class="head d-flex justify-content-between align-items-center">
+    <div class="head d-flex justify-content-between align-items-center border-bottom">
 
         <a class="head__logoHolder" href="/">
             <img src="/media/logo.png" alt="site's logo"/>

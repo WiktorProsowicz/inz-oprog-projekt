@@ -26,21 +26,3 @@
 .gridtile__content {
     height: 100%;
 }
-
-.gridtile__tags {
-    width: 100%;
-    height: 40px;
-    border-top: 1px solid #ddd;
-    padding: 7px 0;
-}
-
-.gridtile__tagsList {
-    margin: 0;
-    padding: 0;
-    gap: 10px;
-    overflow: hidden;
-}
-
-.gridtile__tagsList li::marker {
-    content: "";
-}

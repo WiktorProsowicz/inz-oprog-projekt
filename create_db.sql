@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     `blocked_until` DATE,
     `admin` BOOL NOT NULL,
     `profile_img` LONGBLOB,
+    `description` TEXT(500),
 
     PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=10;

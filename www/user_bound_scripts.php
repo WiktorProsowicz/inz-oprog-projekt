@@ -7,11 +7,17 @@
         $connection = connect_to_database();
     }
     catch(Exception $e) {
-        die($e);
+        die('<h1 class="d-flex justify-content-center mt-5">
+                <span class="fs-4 me-2">Nie udało się połączyć z bazą.</span>
+                <a class="link-secondary fs-4" href="/index.php">Wróć do strony głównej.</a>
+            </h1>');
     }
 
     if($connection->connect_error) {
-        die("Nie udało się połączyć z bazą.");
+        die('<h1 class="d-flex justify-content-center mt-5">
+                <span class="fs-4 me-2">Nie udało się połączyć z bazą.</span>
+                <a class="link-secondary fs-4" href="/index.php">Wróć do strony głównej.</a>
+            </h1>');
     }
 
     if(isset($_FILES["added_profileimg"])) {
@@ -45,6 +51,8 @@
 
         header('Location: /profile.php?u=' . $_SESSION["user_username"]);
         unset($_POST["added_profileimg"]);
+
+        exit();
     }
 
 
@@ -58,6 +66,52 @@
 
         unset($_POST["profile_trash"]);
         header('Location: /profile.php?u=' . $_SESSION["user_username"]);
+        exit();
+    }
+
+    if(isset($_POST["profileSettings_changedDesc"])) {
+
+        $changed_desc = $_POST["profileSettings_changedDesc"];
+        $_SESSION["profileSettings_passedDesc"] = $_POST["profileSettings_changedDesc"];
+
+        if(strlen($changed_desc) == 0 || strlen($changed_desc) > 500) {
+            $_SESSION["profileSettings_descmsg"] = "Opis musi zawierać od 1 do 500 znaków.";
+
+        }
+        else {
+            $query = sprintf("UPDATE users SET `description` = '%s' WHERE `id` = %d;", $connection->real_escape_string($changed_desc), $_SESSION["user_id"]);
+            $connection->query($query);
+
+            unset($_POST["profileSettings_changedDesc"]);
+        }
+
+        unset($_POST["profileSettings_changedDesc"]);
+        header("Location: /profile_settings.php");
+        exit();
+    }
+
+    if(isset($_POST["profileSettings_changedPasswd"])) {
+
+        $changedPasswd = $_POST["profileSettings_changedPasswd"];
+        $changedPaswdAgain = $_POST["profileSettings_changedPasswdAgain"];
+
+        if($changedPasswd == "") {
+            $_SESSION["profileSettings_passwdmsg"] = "Hasło nie może być puste.";
+        }
+        else if(!preg_match('/^[a-zA-Z0-9]{6,20}$/', $changedPasswd)) {
+            $_SESSION["profileSettings_passwdmsg"] = "Hasło może składać się wyłącznie z małych liter, wielkich liter i cyfr oraz mieć 6-20 znaków.";
+        }
+        else if($changedPasswd != $changedPaswdAgain) {
+            $_SESSION["profileSettings_passwdmsg"] = "Hasła muszą się zgadzać.";
+        }
+        else {
+            $query = sprintf("UPDATE users SET `password` = '%s' WHERE `id` = %d;", password_hash($changedPasswd, PASSWORD_DEFAULT), $_SESSION["user_id"]);
+            $connection->query($query);
+        }
+
+        unset($_POST["profileSettings_changedPasswd"]);
+        unset($_POST["profileSettings_changedPasswdAgain"]);
+        header("Location: /profile_settings.php");
         exit();
     }
 

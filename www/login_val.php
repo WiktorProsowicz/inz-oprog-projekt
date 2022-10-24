@@ -43,7 +43,7 @@
 
     $_SESSION["user_username"] = $user_row["username"];
     $_SESSION["user_id"] = $user_row["id"];
-    $_SESSION["user_profileimg"] = $user_row["profileimg"];
+    $_SESSION["user_profileimg"] = base64_encode($user_row["profile_img"]);
     $_SESSION["user_blocked"] = $user_row["blocked"];
     $_SESSION["user_admin"] = $user_row["admin"];
 

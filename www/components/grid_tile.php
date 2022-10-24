@@ -5,30 +5,16 @@
             <?php echo $tile_title; ?>
         </span>
 
-        <span class="gridtile__content">
+        <span class="gridtile__content text-secondary">
             <?php echo $tile_short; ?>
         </span>
 
-        <div class="gridtile__tags">
-
-            <ul class="gridtile__tagsList d-flex justify-content-start">
-
+        <div class="gridtile__author">
                 <?php 
                 
-                    foreach($tile_tags as $tag) {
-                        echo '
-                            <li class="p-1 bg-secondary text-light rounded-2">'
-                            
-                                .$tag.
-                            
-                            '</li>
-                        ';
-                    }
+                    echo $tile_author;
                 
                 ?>
-
-            </ul>
-
         </div>
     </a>
 

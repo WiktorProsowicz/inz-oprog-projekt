@@ -1,0 +1,59 @@
+.profileSettings__stack {
+    gap: 70px;
+}
+
+.profileSettings__description, .profileSettings__password{
+    margin-top: 10px;
+    gap: 15px;
+    position: relative;
+}
+
+.profileSettings__description textarea {
+    width: 450px;
+    height: 200px;
+    padding: 10px;
+    border: solid #ccc 1px;
+    resize: none;
+    color: var(--bs-secondary);
+}
+
+.profileSettings__description textarea:focus {
+    outline: solid #aaa 1px;
+}
+
+.profileSettings__password input[type="password"] {
+    width: 300px;
+    height: 35px;
+    padding: 10px;
+    border: solid #ccc 1px;
+}
+
+.profileSettings__password input[type="password"]:focus {
+    outline: solid #aaa 1px;
+}
+
+.profileSettings__stack input[type="submit"] {
+    height: 35px;
+    background-color: rgba(216, 211, 204, 0.958);
+    border: 1px solid #ccc;
+    color: #666;
+    padding: 5px;
+}
+
+.profileSettings__stack input[type="submit"]:hover {
+    background-color: #ddd;
+}
+
+.profileSettings__turnBack {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+
+.profileSettings__descriptionCounter {
+    position: absolute;
+    left: 470px;
+    bottom: 50px;
+    height: 30px;
+    width: 150px;
+}
