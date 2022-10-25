@@ -1,0 +1,80 @@
+.postWorkbench {
+    border-radius: 20px;
+    width: 85%;
+    position: relative;
+}
+
+.postWorkbench__left{
+    gap: 10px;
+}
+
+.postWorkbench__left textarea {
+    height: 800px;
+    resize: none;
+    padding: 10px;
+    border: solid #ccc 1px;
+    tab-size: 4;
+}
+
+.postWorkbench__left textarea:focus {
+    outline: solid #aaa 1px;
+}
+
+.postWorkbench__contentCount {
+    width: 100px;
+    padding: 5px;
+}
+
+.postWorkbench__right {
+    gap: 30px;
+}
+
+.postWorkbench__categoriesHolder {
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.postWorkbench__categoriesHolder select {
+    width: 80%;
+    border: solid #ccc 1px;
+    padding: 5px;
+}
+
+.postWorkbench__categoriesHolder select:focus {
+    outline: solid #aaa 1px;
+}
+
+.postWorkbench__tagsHolder {
+    gap: 10px;
+}
+
+.postWorkbench__tagsHolder textarea {
+    width: 80%;
+    height: 300px;
+    padding: 10px;
+    resize: none;
+    border: solid #ccc 1px;
+}
+
+.postWorkbench__tagsHolder textarea:focus {
+    outline: solid #aaa 1px;
+}
+
+.postWorkbench__submit {
+    height: 35px;
+    background-color: rgba(216, 211, 204, 0.958);
+    border: 1px solid #ccc;
+    color: #666;
+    padding: 5px;
+    width: 80%;
+}
+
+.postWorkbench__submit:hover {
+    background-color: #ddd;
+}
+
+.postWorkbench__turnBack {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}

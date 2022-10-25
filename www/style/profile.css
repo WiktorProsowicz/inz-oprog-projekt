@@ -101,6 +101,7 @@
     padding: 10px;
     background-color: rgba(216, 211, 204, 0.958);
     color: black;
+    gap: 10px;
 }
 
 .profile__addNewPost:hover {
@@ -110,4 +111,9 @@
 .profile__addNewPost img{
     height: 1.2em;
     width: 1.2em;
+}
+
+.profile__postsGrid {
+    gap: 50px;
+    flex-wrap: wrap;
 }

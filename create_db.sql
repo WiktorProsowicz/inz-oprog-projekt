@@ -13,6 +13,13 @@ CREATE TABLE IF NOT EXISTS users (
     PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=10;
 
+CREATE TABLE IF NOT EXISTS categories (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` TEXT(50) NOT NULL,
+
+    PRIMARY KEY (`id`)
+);
+
 CREATE TABLE IF NOT EXISTS posts (
     `id` INT NOT NULL AUTO_INCREMENT,
     `author_id` INT NOT NULL,
@@ -21,10 +28,13 @@ CREATE TABLE IF NOT EXISTS posts (
     `modified` DATE,
     `likes` INT NOT NULL,
     `dislikes` INT NOT NULL,
+    `category_id` INT NOT NULL,
 
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`author_id`) REFERENCES users(`id`)
+    FOREIGN KEY (`author_id`) REFERENCES users(`id`),
+    FOREIGN KEY (`category_id`) REFERENCES categories(`id`)
 );
+
 
 CREATE TABLE IF NOT EXISTS comments (
     `id` INT NOT NULL AUTO_INCREMENT,

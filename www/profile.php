@@ -111,6 +111,7 @@
         <link href="/style/clearfix.css" rel="stylesheet"/>
         <link href="/style/head.css" rel="stylesheet"/>
         <link href="/style/profile.css" rel="stylesheet"/>
+        <link href="/style/gridtile.css" rel="stylesheet"/>
 
     </head>
 
@@ -233,15 +234,44 @@
 
             <?php 
                 if(isset($_SESSION["user_id"]) && $profile_viewed_id == $_SESSION["user_id"]) {
-                    echo '<div class="row my-5">
+                    echo '<div class="row mt-5">
 
-                        <a href="/edit_post.php" class="profile__addNewPost d-flex justify-content-center align-items-center mx-auto rounded">
+                        <a href="/post_workbench.php" class="profile__addNewPost d-flex justify-content-center align-items-center mx-auto rounded">
                             <span class="me-1">Dodaj nowy post</span><img src="/media/plus_icon.png"/>
                         </a>
 
                     </div>';
                 }
             ?>
+
+            <div class="row mt-5">
+                <div class="col-10 offset-1">
+
+                    <h3 class="fs-4 text-secondary my-3"><span class="ms-5">Ostatnie posty:</span></h3>
+
+                    <div class="profile__postsGrid p-4 d-flex justify-content-center">
+                        <?php 
+
+                            //hardcoded tiles
+                            $tiles = array(
+                                array("My own poem", 'środowa noc to wody czas to jest wooood czassssss to zloty wez jak ne masz to miej', "autorr"),
+                                array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
+                                array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
+                                array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g")
+                            );
+
+                            foreach($tiles as $tile) {
+                                $tile_title = $tile[0];
+                                $tile_short = $tile[1];
+                                $tile_author = $tile[2];
+                                include "./components/grid_tile.php";
+                            }
+
+                        ?>
+                    </div>
+
+                </div>
+            </div>
 
         <div>
 
