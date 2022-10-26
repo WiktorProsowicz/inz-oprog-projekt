@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS comments (
 
 CREATE TABLE IF NOT EXISTS tags (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(20) NOT NULL,
+    `name` VARCHAR(20) NOT NULL UNIQUE,
 
     PRIMARY KEY (`id`)
 );
@@ -62,7 +62,9 @@ CREATE TABLE IF NOT EXISTS tags_in_posts (
     `post_id` INT NOT NULL,
 
     FOREIGN KEY (`tag_id`) REFERENCES tags(`id`),
-    FOREIGN KEY (`post_id`) REFERENCES posts(`id`)
+    FOREIGN KEY (`post_id`) REFERENCES posts(`id`),
+
+    CONSTRAINT `tag_post` UNIQUE (`tag_id`, `post_id`)
 );
 
 CREATE TABLE IF NOT EXISTS watchers (

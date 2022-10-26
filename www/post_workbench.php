@@ -40,7 +40,11 @@
 
                 $row = $result->fetch_array();
 
-                $postWorkbench__content = htmlentities($row[0]);
+                if(!isset($_SESSION["postWorkbench_currentPostContent"])) {
+                    $_SESSION["postWorkbench_surrentPostContent"] = htmlentities($row[0]);
+                }
+                
+
                 $postWorkbench__category = $row[1];
                 $postWorkbench__categoryId = $row[2];
 
@@ -53,12 +57,14 @@
 
                 $tag_assoc = $result->fetch_all();
 
-                $postWorkbench__taglist = array();
+                if(!isset($_SESSION["postWorkbench_currentPostTags"])) {
+                    $_SESSION["postWorkbench_currentPostTags"] = "";
 
-                foreach($tag_assoc as $tag){
-                    array_push($postWorkbench__taglist, $tag[0]);
+                    foreach($tag_assoc as $tag){
+                        $_SESSION["postWorkbench_currentPostTags"] += " " + $tag[0];
+                    }
                 }
-
+                
                 $postWorkbench_post_valid = true;
             }
         }
@@ -66,12 +72,6 @@
     }
     else {
         $postWorkbench_post_valid = true;
-
-        // wiping out saved post id
-        if(isset($_SESSION["postWorkbench_currentPostId"])) {
-            unset($_SESSION["postWorkbench_currentPostId"]);
-            unset($_SESSION["postWorkbench_currentPostContent"]);
-        }
     }
 
 ?>
@@ -151,8 +151,8 @@
                             <div class="postWorkbench__contentCount text-secondary">
                                 <span>
                                     <?php 
-                                        if(isset($postWorkbench__content)) {
-                                            echo strlen($postWorkbench__content) .' / 40000';
+                                        if(isset($_SESSION["postWorkbench_currentPostContent"])) {
+                                            echo strlen($_SESSION["postWorkbench_currentPostContent"]) .' / 40000';
                                         }
                                         else {
                                             echo '0 / 40000';
@@ -171,7 +171,11 @@
                             }
                         ?>
 
-                        <textarea class="postWorkbench__content" id="postWorkbenchContent" name="editedPostContent"></textarea>
+                        <textarea class="postWorkbench__content" id="postWorkbenchContent" name="editedPostContent"><?php 
+                                if(isset($_SESSION["postWorkbench_currentPostContent"])) {
+                                    echo $_SESSION["postWorkbench_currentPostContent"];
+                                }
+                                ?></textarea>
 
                     </div>
 
@@ -213,7 +217,13 @@
                         <div class="row postWorkbench__tagsHolder d-flex flex-column">
 
                             <label to="#postWorkbenchTags" class="text-secondary">Tagi oddzielone spacją</label>
-                            <textarea class="postWorkbench__tags" id="postWorkbenchTags" name="editedPostTags"></textarea>
+                            <textarea class="postWorkbench__tags" id="postWorkbenchTags" name="editedPostTags"><?php 
+
+                                if(isset($_SESSION["postWorkbench_currentPostTags"])) {
+                                    echo $_SESSION["postWorkbench_currentPostTags"];
+                                }
+
+                            ?></textarea>
 
                         </div>
                         
