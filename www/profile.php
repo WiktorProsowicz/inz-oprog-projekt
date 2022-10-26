@@ -21,8 +21,6 @@
             </h1>');
     }
 
-    
-
     if(!isset($_GET["u"])) {
         $profile_viewed_username = "";
     }
@@ -54,8 +52,14 @@
             $profile_viewed_createdaccount = $row["created_account"];
             $profile_viewed_admin = $row["admin"];
             $profile_viewed_description = htmlentities($row["description"]);
-            $profile_viewed_profileimg = base64_encode($row["profile_img"]);
 
+            if($row["profile_img"] != null) {
+                $profile_viewed_profileimg = base64_encode($row["profile_img"]);
+            }
+            else {
+                $profile_viewed_profileimg = null;
+            }
+            
             $result->free_result();
 
             // get number of posts

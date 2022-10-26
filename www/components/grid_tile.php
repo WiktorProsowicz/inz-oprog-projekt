@@ -1,6 +1,6 @@
 <div class="gridtile bg-light rounded-3">
 
-    <a class="d-flex flex-column h-100 align-items-center justify-content-between " <?php echo 'href="/read.php?p=' . $tile_title . '"';?> >
+    <a class="d-flex flex-column h-100 align-items-center justify-content-between " <?php echo 'href="/read.php?p=' . $tile_id . '"';?> >
         <span class="gridtile__title">
             <?php echo $tile_title; ?>
         </span>
@@ -17,6 +17,5 @@
                 ?>
         </div>
     </a>
-
 
 </div>

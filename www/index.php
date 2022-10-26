@@ -57,7 +57,7 @@
 
                         // hard-coded categories array
                         $categories = array(
-                            "śmieszne", "wiersze", "wiadomości", "zainteresowania", "lifehacki", "opowiadania", "gore", "opowiadania erotyczne"
+                            "śmieszne", "wiersze", "wiadomości", "zainteresowania", "lifehacki", "opowiadania"
                         );
 
                         foreach ($categories as $cat) {
@@ -90,13 +90,14 @@
 
                     //hardcoded tiles
                     $tiles = array(
-                        array("My own poem", 'środowa noc to wody czas to jest wooood czassssss to zloty wez jak ne masz to miej', "autorr"),
+                        array("My own poem", 'śak ne maewgewgesz to mewfewggij', "autorr"),
                         array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
                         array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
                         array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g")
                     );
 
                     foreach($tiles as $tile) {
+                        $tile_id = null;
                         $tile_title = $tile[0];
                         $tile_short = $tile[1];
                         $tile_author = $tile[2];

@@ -1,0 +1,38 @@
+.read {
+    width: 85%;
+    border-radius: 20px;
+}
+
+.read__mainText {
+    background-color: white;
+    border-radius: 10px;
+
+}
+
+.read__right {
+    gap: 50px;
+}
+
+.read__authorInfo {
+    gap: 5px;
+    
+}
+
+.read__authorInfoImg {
+    max-width: 50%;
+}
+
+.read__rating {
+    gap: 20px;
+}
+
+.read__ratingItem {
+    gap: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.read__ratingItem img {
+    width: 20px;
+}

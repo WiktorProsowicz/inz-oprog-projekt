@@ -19,7 +19,7 @@
         $connection = connect_to_database();
     }
     catch(Exception $e) {
-        die("Failed to connect to database ");
+        die("Failed to connect to database " . $e);
     }
     
     if($connection->connect_error) {
