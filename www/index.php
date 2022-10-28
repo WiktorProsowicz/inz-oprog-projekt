@@ -2,10 +2,25 @@
 
     session_start();
 
-    // $_SESSION["user_username"] = "kerfuś_UwU";
-    // $_SESSION["user_profileimgsrc"] = "https://preview.redd.it/u6l1kz9sbmu91.jpg?auto=webp&s=126d0cf3c392e9fd0f704cab5e7bb154072d1fcb";
+    require_once("./connect.php");
 
-    // session_destroy();
+    try {
+        $connection = connect_to_database();
+    }
+
+    catch(Exception $e) {
+        die('<h1">
+                <span>Nie udało się połączyć z bazą.</span>
+            </h1>');
+    }
+
+    if($connection->connect_error) {
+        die('<h1">
+                <span>Nie udało się połączyć z bazą.</span>
+            </h1>');
+    }
+
+
 
 ?>
 
@@ -56,15 +71,17 @@
                     <?php 
 
                         // hard-coded categories array
-                        $categories = array(
-                            "śmieszne", "wiersze", "wiadomości", "zainteresowania", "lifehacki", "opowiadania"
-                        );
+                        $query = "SELECT `name` FROM categories;";
+                        $result = $connection->query($query);
+                        $categories = $result->fetch_all();
 
-                        foreach ($categories as $cat) {
+                        $result->free_result();
+
+                        foreach($categories as $cat) {
                             echo '
                                 <li class="p-3 border-start border-secondary">
-                                    <a href="/search.php?c='.$cat.'" class="link-secondary">'
-                                        .$cat.
+                                    <a href="/search.php?c='.$cat[0].'" class="link-secondary">'
+                                        .$cat[0].
                                     '</a>
                                 </li>
                             ';

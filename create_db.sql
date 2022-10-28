@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS categories (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `name` TEXT(50) NOT NULL,
+    `name` TEXT(50) NOT NULL UNIQUE,
 
     PRIMARY KEY (`id`)
 );
@@ -23,11 +23,10 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS posts (
     `id` INT NOT NULL AUTO_INCREMENT,
     `author_id` INT NOT NULL,
+    `title` VARCHAR(100) NOT NULL,
     `content` TEXT(40000) NOT NULL,
-    `created` DATE NOT NULL,
-    `modified` DATE,
-    `likes` INT NOT NULL,
-    `dislikes` INT NOT NULL,
+    `created` DATETIME NOT NULL,
+    `modified` DATETIME,
     `category_id` INT NOT NULL,
 
     PRIMARY KEY (`id`),
@@ -35,6 +34,14 @@ CREATE TABLE IF NOT EXISTS posts (
     FOREIGN KEY (`category_id`) REFERENCES categories(`id`)
 );
 
+CREATE TABLE IF NOT EXISTS ratings (
+    `user_id` INT NOT NULL,
+    `post_id` INT NOT NULL,
+    `is_like` BOOLEAN NOT NULL,
+
+    FOREIGN KEY (`user_id`) REFERENCES users(`id`),
+    FOREIGN KEY (`post_id`) REFERENCES posts(`id`)
+);
 
 CREATE TABLE IF NOT EXISTS comments (
     `id` INT NOT NULL AUTO_INCREMENT,
@@ -74,3 +81,19 @@ CREATE TABLE IF NOT EXISTS watchers (
     FOREIGN KEY (`user_id`) REFERENCES users(`id`),
     FOREIGN KEY (`watcher_id`) REFERENCES users(`id`)
 );
+
+
+-- add hardcoded categories
+INSERT IGNORE INTO categories (`name`) VALUES 
+('Opowiadania erotyczne'),
+('Fanfiki'),
+('Kawały'),
+('Informacje'),
+('Poezja'),
+('Proza'),
+('Gore'),
+('Gnioooo'),
+('Szniooooo'),
+('Tutoriale'),
+('Lifehacki'),
+('Inne');

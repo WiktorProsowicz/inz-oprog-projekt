@@ -30,7 +30,7 @@
         }
 
         else{
-            $query = sprintf("SELECT p.content, c.name, c.id FROM posts AS p JOIN categories AS c ON `p.category_id` = `c.id` WHERE `p.id` = '%d';", $_GET["p"]);
+            $query = sprintf("SELECT p.content, c.name, c.id, p.title FROM posts AS p JOIN categories AS c ON `p.category_id` = `c.id` WHERE `p.id` = '%d';", $_GET["p"]);
             $result = $connection->query($query);
 
             if($result->num_rows == 0){
@@ -42,6 +42,10 @@
 
                 if(!isset($_SESSION["postWorkbench_currentPostContent"])) {
                     $_SESSION["postWorkbench_surrentPostContent"] = htmlentities($row[0]);
+                }
+
+                if(!isset($_SESSION["postWorkbench_currentPostTitle"])) {
+                    $_SESSION["postWorkbench_currentPostTitle"] = htmlentities($row[3]);
                 }
                 
 
@@ -145,9 +149,28 @@
                 <form class="row g-2 py-3" action="/save_post.php" method="post">
 
                     <div class="postWorkbench__left col-9 p-5 d-flex flex-column">
+
+                        <div class="postWorkbench__titleBox d-flex flex-column">
+                            <label class="text-secondary" for="postWorkbenchTitle">Tytuł:</label>
+
+                            <?php 
+                                if(isset($_SESSION["postWorkbench_titlemsg"])) {
+
+                                    echo '<span class="text-danger">'.$_SESSION["postWorkbench_titlemsg"].'</span>';
+    
+                                    unset($_SESSION["postWorkbench_titlemsg"]);
+                                }
+                            ?>
+
+                            <input class="postWorkbench__title" type="text" id="postWorkbenchTitle" name="editedPostTitle" value="<?php 
+                                if(isset($_SESSION["postWorkbench_currentPostTitle"])) {
+                                    echo $_SESSION["postWorkbench_currentPostTitle"];
+                                }
+                            ?>"/>
+                        </div>
                         
                         <div class="d-flex justify-content-between">
-                            <label class="text-secondary" to="#postWorkbenchContent">Zawartość posta</label>
+                            <label class="text-secondary" for="#postWorkbenchContent">Zawartość posta</label>
                             <div class="postWorkbench__contentCount text-secondary">
                                 <span>
                                     <?php 
@@ -183,7 +206,7 @@
 
                         <div class="row postWorkbench__categoriesHolder d-flex flex-column">
 
-                            <label to="#postWorkbenchCategories" class="text-secondary">Kategoria</label>
+                            <label for="#postWorkbenchCategories" class="text-secondary">Kategoria</label>
                             <select id="postWorkbenchCategories" name="editedPostCat">
 
                             <?php
@@ -216,7 +239,7 @@
 
                         <div class="row postWorkbench__tagsHolder d-flex flex-column">
 
-                            <label to="#postWorkbenchTags" class="text-secondary">Tagi oddzielone spacją</label>
+                            <label for="#postWorkbenchTags" class="text-secondary">Tagi oddzielone spacją</label>
                             <textarea class="postWorkbench__tags" id="postWorkbenchTags" name="editedPostTags"><?php 
 
                                 if(isset($_SESSION["postWorkbench_currentPostTags"])) {

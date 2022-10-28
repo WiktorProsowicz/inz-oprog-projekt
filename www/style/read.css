@@ -9,6 +9,10 @@
 
 }
 
+.read__left {
+    gap: 20px;
+}
+
 .read__right {
     gap: 50px;
 }
@@ -18,8 +22,13 @@
     
 }
 
+.read__authorInfoLink:hover .read__authorInfoImg{
+    transform: scale(1.1);
+}
+
 .read__authorInfoImg {
     max-width: 50%;
+    transition: all .1s linear;
 }
 
 .read__rating {

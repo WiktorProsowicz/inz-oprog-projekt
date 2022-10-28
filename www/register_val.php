@@ -68,13 +68,22 @@
         exit();
     }
 
-    $query = sprintf("SELECT COUNT(*) AS cnt FROM users WHERE email = '%s';", $email);
+    $query = sprintf("SELECT COUNT(*) AS cnt FROM users WHERE email = '%s'
+                    UNION ALL
+                    SELECT COUNT(*) AS cnt FROM users WHERE username = '%s';", $username);
     $result = $connection->query($query);
 
     $same_email_cnt = $result->fetch_array()[0];
+    $same_username_cnt = $result->fetch_array()[0];
 
     if($same_email_cnt > 0) {
         $_SESSION["email_msg"] = "Zostało już założone konto na ten adres email.";
+        header("Location: register.php");
+        exit();
+    }
+
+    if($same_username_cnt > 0) {
+        $_SESSION["username_msg"] = "Podany login jest już zajęty.";
         header("Location: register.php");
         exit();
     }

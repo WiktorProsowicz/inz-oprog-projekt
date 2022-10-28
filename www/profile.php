@@ -257,17 +257,23 @@
                         <?php 
 
                             //hardcoded tiles
-                            $tiles = array(
-                                array("My own poem", 'środowa noc to wody czas to jest wooood czassssss to zloty wez jak ne masz to miej', "autorr"),
-                                array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
-                                array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
-                                array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g")
-                            );
+                            $query = sprintf("SELECT CONCAT(SUBSTRING(p.content, 1, 200), '...'), SUBSTRING(p.title, 1, 30), c.name, p.id 
+                                FROM posts AS p JOIN categories AS c ON p.category_id = c.id 
+                                WHERE p.author_id = '%d' 
+                                ORDER BY p.modified DESC LIMIT 10;", $profile_viewed_id);
+
+                            $result = $connection->query($query);
+                            $tiles = $result->fetch_all();
+
+                            $result->free_result();
 
                             foreach($tiles as $tile) {
-                                $tile_title = $tile[0];
-                                $tile_short = $tile[1];
-                                $tile_author = $tile[2];
+                                $tile_short = $tile[0];
+                                $tile_title = $tile[1];
+                                $tile_cat = $tile[2];
+                                $tile_id = $tile[3];
+                                $tile_author = $profile_viewed_username;
+
                                 include "./components/grid_tile.php";
                             }
 

@@ -9,11 +9,12 @@
             <?php echo $tile_short; ?>
         </span>
 
-        <div class="gridtile__author">
+        <div class="gridtile__author d-flex flex-column align-items-center">
                 <?php 
-                
-                    echo $tile_author;
-                
+
+                    echo '<span class="fs-5">' .$tile_author. '</span>';
+                    echo '<span class="text-secondary">' .$tile_cat. '</span>';
+                    
                 ?>
         </div>
     </a>

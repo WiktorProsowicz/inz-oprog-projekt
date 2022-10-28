@@ -8,6 +8,19 @@
     gap: 10px;
 }
 
+.postWorkbench__titleBox {
+    gap: 10px;
+}
+
+.postWorkbench__title {
+    border: solid #CCC 1px;
+    padding: 5px;
+}
+
+.postWorkbench__title:focus {
+    outline: solid #aaa 1px;
+}
+
 .postWorkbench__left textarea {
     height: 800px;
     resize: none;

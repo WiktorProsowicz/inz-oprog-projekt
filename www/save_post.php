@@ -24,7 +24,9 @@
 
     $_SESSION["postWorkbench_currentPostContent"] = $_POST["editedPostContent"];
     $_SESSION["postWorkbench_currentPostTags"] = $_POST["editedPostTags"];
+    $_SESSION["postWorkbench_currentPostTitle"] = $_POST["editedPostTitle"];
 
+    // checking content
     if(strlen($_POST["editedPostContent"]) == 0 || strlen($_POST["editedPostContent"]) > 40000) {
         $_SESSION["postWorkbench_contentmsg"] = "Post musi zawierać od 1 do 40000 znaków.";
         
@@ -37,9 +39,22 @@
 
         exit();
     }
+
+    // checking title
+    if(strlen($_POST["editedPostTitle"]) == 0 || strlen($_POST["editedPostTitle"]) > 100) {
+        $_SESSION["postWorkbench_titlemsg"] = "Tytuł musi zawierać od 1 do 100 znaków.";
+        
+        if(isset($_SESSION["postWorkbench_currentPostId"])) {
+            header('Location: /post_workbench.php?p=' . $_SESSION["postWorkbench_currentPostId"]);
+        }
+        else {
+            header("Location: /post_workbench.php");
+        }
+
+        exit();
+    }
     
     // getting tags from tag string
-
     $collected_tags = explode(" ", $_SESSION["postWorkbench_currentPostTags"]);
     $collected_tags = array_diff($collected_tags, array(""));
     $collected_tags = array_unique($collected_tags);
@@ -69,15 +84,17 @@
 
     // inserting post
     if(isset($_SESSION["postWorkbench_currentPostId"])) {
-        $query = sprintf("UPDATE posts SET `content` = '%s', `modified` = '%s', `category_id` = %d;", 
-                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostContent"]), date("Y-m-j", time()), $chosen_category_id);
+        $query = sprintf("UPDATE posts SET `content` = '%s', `modified` = '%s', `category_id` = %d, `title` = '%s';", 
+                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostContent"]), date("Y-m-j H:i:s", time()), $chosen_category_id, 
+                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostTitle"]));
         $connection->query($query);
     }
     else {
-        $query = sprintf("INSERT INTO posts (`author_id`, `content`,`created`, `modified`, `likes`, `dislikes`, `category_id`)
-                    VALUES (%d, '%s', '%s', '%s', %d, %d, %d);", 
+        $query = sprintf("INSERT INTO posts (`author_id`, `content`,`created`, `modified`, `category_id`, `title`)
+                    VALUES (%d, '%s', '%s', '%s', %d, '%s');", 
                     $_SESSION["user_id"], $connection->real_escape_string($_SESSION["postWorkbench_currentPostContent"]), 
-                    date("Y-m-j", time()), date("Y-m-j", time()), 0, 0, $chosen_category_id);
+                    date("Y-m-j", time()), date("Y-m-j H:i:s", time()), $chosen_category_id, 
+                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostTitle"]));
 
             $connection->query($query);
         
@@ -93,6 +110,7 @@
     unset($_SESSION["postWorkbench_currentPostId"]);
     unset($_SESSION["postWorkbench_currentPostContent"]);
     unset($_SESSION["postWorkbench_currentPostTags"]);
+    unset($_SESSION["postWorkbench_currentPostTitle"]);
 
     header('Location: /profile.php?u=' . $_SESSION["user_username"]);
 
