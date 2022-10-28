@@ -1,0 +1,15 @@
+.comment {
+
+}
+
+.comment__head {
+    gap: 10px;
+}
+
+.comment__authorLink:hover span {
+    color: rgb(85, 85, 85) !important;
+}
+
+.comment__rating {
+    gap: 10px;
+}

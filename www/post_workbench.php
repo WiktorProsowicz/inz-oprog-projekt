@@ -175,10 +175,10 @@
                                 <span>
                                     <?php 
                                         if(isset($_SESSION["postWorkbench_currentPostContent"])) {
-                                            echo strlen($_SESSION["postWorkbench_currentPostContent"]) .' / 40000';
+                                            echo strlen($_SESSION["postWorkbench_currentPostContent"]) .' / 20000';
                                         }
                                         else {
-                                            echo '0 / 40000';
+                                            echo '0 / 20000';
                                         }
                                     ?>
                                 </span>
@@ -247,6 +247,15 @@
                                 }
 
                             ?></textarea>
+
+                            <?php 
+                                if(isset($_SESSION["postWorkbench_tagsmsg"])) {
+
+                                    echo '<div class="text-danger postWorkbench__tagsMsgHolder">'.$_SESSION["postWorkbench_tagsmsg"].'</div>';
+
+                                    unset($_SESSION["postWorkbench_tagsmsg"]);
+                                }
+                            ?>
 
                         </div>
                         

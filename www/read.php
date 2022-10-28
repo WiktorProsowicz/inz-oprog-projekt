@@ -52,7 +52,7 @@
         $result->free_result();
 
         $read_viewedTitle = htmlentities($row["title"]);
-        $read_viewedShort = substr($read_viewedTitle, 0, 20);
+        $read_viewedShort = substr($read_viewedTitle, 0, 40);
         $read_viewedContent = htmlentities($row["content"]);
         $read_viewedUsername = $row["username"];
         $read_viewedAuthorId = $row["userid"];
@@ -96,7 +96,16 @@
 
         $result->free_result();
 
-        
+        // get post tags
+        $query = sprintf("SELECT t.name FROM tags t JOIN tags_in_posts tip ON t.id = tip.tag_id WHERE tip.post_id = %d;", $read_viewedId);
+        $result = $connection->query($query);
+
+        $rows = $result->fetch_all();
+
+        $read_viewedTagsIds = array();
+        foreach($rows as $row) {
+            array_push($read_viewedTagsIds, $row[0]);
+        }
     }
 
     
@@ -132,6 +141,7 @@
         <link href="/style/clearfix.css" rel="stylesheet"/>
         <link href="/style/head.css" rel="stylesheet"/>
         <link href="/style/read.css" rel="stylesheet"/>
+        <link href="/style/comment.css" rel="stylesheet"/>
 
     </head>
 
@@ -141,7 +151,7 @@
             require "./components/head.php";
         ?>
 
-        <div class="container-fluid p-5">
+        <div class="container-fluid pt-5 px-5">
 
             <div class="read mx-auto bg-light border">
 
@@ -160,6 +170,14 @@
                             <?php echo str_replace("\n", "<br>", $read_viewedContent);?>
 
                         </div>
+
+                        <div class="read__tags d-flex">
+                            <?php 
+                                foreach($read_viewedTagsIds as $tag) {
+                                    echo '<a href="/search.php?t='.$tag.'" class="read__tagsTag"><span class="rounded">'.$tag.'</span></a>';
+                                }
+                            ?>
+                        </div>
                     </div>
 
                     <div class="read__right col-2 d-flex flex-column justify-content-center">
@@ -171,7 +189,7 @@
                             
                             <span class="align-self-center">
                                 <a href="/profile.php?u=<?php echo $read_viewedUsername;?>" class="read__authorInfoLink link-secondary fw-bold d-flex flex-column align-items-center">
-                                    <img  class="read__authorInfoImg mb-2" src="data:image/jpg;charset=utf8;base64,<?php echo $read_viewedImg;?>"/>
+                                    <img  class="read__authorInfoImg mb-2 border rounded p-1" src="data:image/jpg;charset=utf8;base64,<?php echo $read_viewedImg;?>"/>
                                     <?php
                                         echo '<span>' .$read_viewedUsername. '</span>';
                                     ?>
@@ -208,6 +226,116 @@
 
             </div>
 
+        </div>
+
+        <div class="container-fluid p-5">
+            <div class="comments mx-auto">
+                
+                <span class="d-flex flex-column">
+                    <h3 class="fs-5 text-secondary">Komentarze:</h3>
+                    <hr style="margin: 0;">
+                </span>
+
+                <div class="mt-3">
+                    
+                    <div class="d-flex flex-column" style="gap: 50px;">
+                        <form class="comments__addComment flex-column d-flex" action="/post_bound_scripts.php" method="post">
+                            <?php 
+                                if(isset($_SESSION["read_commentmsg"])) {
+                                    echo '<span class="text-danger p-2">' . $_SESSION["read_commentmsg"] . '</span>';
+                                    unset($_SESSION["read_commentmsg"]);
+                                }
+                            ?>
+
+                            <textarea type="text" name="commentsAdded" placeholder="Dodaj komentarz..."><?php 
+                                if(isset($_SESSION["read__addedComment"])) {
+                                    echo $_SESSION["read__addedComment"];
+                                }
+                            ?></textarea>
+
+                            <div class="d-flex justify-content-end py-2">
+                                <span class="comments__addCommentCounter text-secondary">
+                                    <?php 
+                                    
+                                        if(isset($_SESSION["read__addedComment"])) {
+                                            echo strlen($_SESSION["read__addedComment"]) . " / 1500";
+                                        }
+                                        else {
+                                            echo "0 / 1500";
+                                        }
+                                    
+                                    ?>
+                                </span>
+                                <button type="submit d-flex align-items-center justify-content-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                        </form>
+                        
+                        <div class="d-flex flex-column" style="gap: 20px;">
+
+                            <?php 
+
+                                $query = sprintf("SELECT c.content, u.username, c.created, c.id FROM comments c JOIN users u ON c.author_id = u.id 
+                                                WHERE post_id = %d ORDER BY created DESC;", $read_viewedId);
+                                $result = $connection->query($query);
+
+                                $rows = $result->fetch_all();
+                                $result->free_result();
+
+                                foreach($rows as $row) {
+                                    $comment_content = str_replace("\n", "<br>", htmlentities($row[0]));
+                                    $comment_author = $row[1];
+                                    $comment_date = $row[2];
+                                    $comment_id = $row[3];
+
+                                    // get ratings
+                                    $query = sprintf("SELECT COUNT(*) FROM comments_ratings WHERE comment_id = %d AND is_like = true
+                                                    UNION ALL
+                                                    SELECT COUNT(*) FROM comments_ratings WHERE comment_id = %d AND is_like = false
+                                                    UNION ALL
+                                                    SELECT is_like FROM comments_ratings WHERE `user_id` = %d AND comment_id = %d;", 
+                                                    $comment_id, $comment_id, $read_viewedAuthorId, $comment_id);
+
+                                    $result = $connection->query($query);
+
+                                    $comment_likes = $result->fetch_array()[0];
+                                    $comment_dislikes = $result->fetch_array()[0];
+
+                                    if($result->num_rows == 2) {
+                                        $comment_likes_class = "";
+                                        $comment_dislikes_class = "";
+                                    }
+                                    else {
+                                        $user_rating_islike = $result->fetch_array()[0];
+                            
+                                        if($user_rating_islike == 1) {
+                                            $comment_likes_class = "text-primary";
+                                            $comment_dislikes_class = "";
+                                        }
+                                        else {
+                                            $comment_likes_class = "";
+                                            $comment_dislikes_class = "text-primary";
+                                        }
+                                    }
+
+                                    $result->free_result();
+
+                                    include "./components/comment.php";
+                                }
+
+                            ?>
+
+                        </div>
+                        
+                    </div>
+
+                </div>
+
+            </div>
         </div>
 
     </body>

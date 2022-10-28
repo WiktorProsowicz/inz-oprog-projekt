@@ -70,7 +70,7 @@
 
     $query = sprintf("SELECT COUNT(*) AS cnt FROM users WHERE email = '%s'
                     UNION ALL
-                    SELECT COUNT(*) AS cnt FROM users WHERE username = '%s';", $username);
+                    SELECT COUNT(*) AS cnt FROM users WHERE username = '%s';", $email, $username);
     $result = $connection->query($query);
 
     $same_email_cnt = $result->fetch_array()[0];

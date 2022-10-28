@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS posts (
     `id` INT NOT NULL AUTO_INCREMENT,
     `author_id` INT NOT NULL,
     `title` VARCHAR(100) NOT NULL,
-    `content` TEXT(40000) NOT NULL,
+    `content` TEXT(20000) NOT NULL,
     `created` DATETIME NOT NULL,
     `modified` DATETIME,
     `category_id` INT NOT NULL,
@@ -47,14 +47,21 @@ CREATE TABLE IF NOT EXISTS comments (
     `id` INT NOT NULL AUTO_INCREMENT,
     `author_id` INT NOT NULL,
     `post_id` INT NOT NULL,
-    `content` TEXT(3000),
+    `content` TEXT(1500),
     `created` DATETIME NOT NULL,
-    `likes` INT NOT NULL,
-    `dislikes` INT NOT NULL,
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author_id`) REFERENCES users(`id`),
     FOREIGN KEY (`post_id`) REFERENCES posts(`id`)
+);
+
+CREATE TABLE IF NOT EXISTS comments_ratings (
+    `user_id` INT NOT NULL,
+    `comment_id` INT NOT NULL,
+    `is_like` BOOLEAN NOT NULL,
+
+    FOREIGN KEY (`user_id`) REFERENCES users(`id`),
+    FOREIGN KEY (`comment_id`) REFERENCES comments(`id`)
 );
 
 CREATE TABLE IF NOT EXISTS tags (

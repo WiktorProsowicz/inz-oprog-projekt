@@ -18,7 +18,7 @@ $(document).ready(() => {
 
         const contentAreaText = $(contentArea).val().length;
 
-        $(".postWorkbench__contentCount > span").html(contentAreaText + " / 40000");
+        $(".postWorkbench__contentCount > span").html(contentAreaText + " / 20000");
     });
 
 });

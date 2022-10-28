@@ -15,6 +15,7 @@
 .postWorkbench__title {
     border: solid #CCC 1px;
     padding: 5px;
+    border-radius: 5px;
 }
 
 .postWorkbench__title:focus {
@@ -27,6 +28,7 @@
     padding: 10px;
     border: solid #ccc 1px;
     tab-size: 4;
+    border-radius: 5px;
 }
 
 .postWorkbench__left textarea:focus {
@@ -51,6 +53,7 @@
     width: 80%;
     border: solid #ccc 1px;
     padding: 5px;
+    border-radius: 5px;
 }
 
 .postWorkbench__categoriesHolder select:focus {
@@ -67,6 +70,7 @@
     padding: 10px;
     resize: none;
     border: solid #ccc 1px;
+    border-radius: 5px;
 }
 
 .postWorkbench__tagsHolder textarea:focus {
@@ -90,4 +94,14 @@
     position: absolute;
     left: 20px;
     top: 20px;
+}
+
+.postWorkbench__tagsMsgHolder {
+    width: 80%;
+    word-break: break-all;
+    padding: 0 20px 0 0;
+}
+
+.postWorkbench__tagsMsgHeader {
+    word-break: keep-all;
 }
