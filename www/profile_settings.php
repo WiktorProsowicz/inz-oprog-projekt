@@ -82,7 +82,7 @@
                     <a href="/profile.php?u=<?php echo $_SESSION["user_username"];?>">Wróć</a>
                 </span>
 
-                <div class="profileSettings__stack mt-4 d-flex flex-column align-items-start w-100">
+                <div class="profileSettings__stack mt-4 d-flex flex-column align-items-center w-100">
 
                     <div>
                         <h3 class="fs-5">Zmień swój opis:</h3>
