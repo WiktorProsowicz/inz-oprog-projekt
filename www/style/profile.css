@@ -117,3 +117,16 @@
     gap: 50px;
     flex-wrap: wrap;
 }
+
+.profile__watchForm button{
+    padding: 5px 30px;
+    background-color: rgba(216, 211, 204, 0.958);
+    border: none;
+    color: black;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.profile__watchForm button:hover {
+    background-color: #ddd;
+}   

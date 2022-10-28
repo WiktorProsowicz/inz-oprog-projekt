@@ -106,18 +106,27 @@
 
 
                     //hardcoded tiles
-                    $tiles = array(
-                        array("My own poem", 'śak ne maewgewgesz to mewfewggij', "autorr"),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g"),
-                        array("random post", 'waesgwaesg weasgd WESG EWsg WE', "g")
-                    );
+                    $query = "SELECT p.id AS id, p.title AS title, u.username AS author, CONCAT(SUBSTRING(p.content, 1, 200), '...') AS short, 
+                    c.name AS category, COUNT(is_like) AS rates 
+                    
+                    FROM posts p JOIN users u ON u.id = p.author_id 
+                    JOIN categories c ON c.id = p.category_id 
+                    LEFT JOIN ratings r ON p.id = r.post_id 
+
+                    GROUP BY p.title ORDER BY rates DESC LIMIT 10;";
+
+                    $result = $connection->query($query);
+                    $tiles = $result->fetch_all();
+
+                    $result->free_result();
 
                     foreach($tiles as $tile) {
-                        $tile_id = null;
-                        $tile_title = $tile[0];
-                        $tile_short = $tile[1];
+                        $tile_short = $tile[3];
+                        $tile_title = $tile[1];
+                        $tile_cat = $tile[4];
+                        $tile_id = $tile[0];
                         $tile_author = $tile[2];
+
                         include "./components/grid_tile.php";
                     }
                 

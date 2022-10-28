@@ -115,4 +115,30 @@
         exit();
     }
 
+
+    if(isset($_POST["profileWatch"])) {
+
+        $query = sprintf("INSERT INTO watchers (`user_id`, `watcher_id`) VALUES (%d, %d);", $_SESSION["profile_viewedId"], $_SESSION["user_id"]);
+        $connection->query($query);
+        
+        header("Location: /profile.php?u=" . $_SESSION["profile_viewedUsername"]);
+
+        unset($_SESSION["profile_viewedId"]);
+        unset($_SESSION["profile_viewedUsername"]);
+        exit();
+
+    }
+
+    if(isset($_POST["profileUnwatch"])) {
+
+        $query = sprintf("DELETE FROM watchers WHERE `user_id` = %d AND `watcher_id` = %d;", $_SESSION["profile_viewedId"], $_SESSION["user_id"]);
+        $connection->query($query);
+
+        header("Location: /profile.php?u=" . $_SESSION["profile_viewedUsername"]);
+
+        unset($_SESSION["profile_viewedId"]);
+        unset($_SESSION["profile_viewedUsername"]);
+        exit();
+    }
+
 ?>

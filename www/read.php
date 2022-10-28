@@ -70,7 +70,7 @@
                         UNION ALL
                         SELECT COUNT(*) FROM ratings WHERE post_id = %d AND is_like = false
                         UNION ALL
-                        SELECT is_like FROM ratings WHERE `user_id` = %d AND post_id = %d;", $read_viewedId, $read_viewedId, $read_viewedAuthorId, $read_viewedId);
+                        SELECT is_like FROM ratings WHERE `user_id` = %d AND post_id = %d;", $read_viewedId, $read_viewedId, $_SESSION["user_id"], $read_viewedId);
 
         $result = $connection->query($query);
 
@@ -298,7 +298,7 @@
                                                     SELECT COUNT(*) FROM comments_ratings WHERE comment_id = %d AND is_like = false
                                                     UNION ALL
                                                     SELECT is_like FROM comments_ratings WHERE `user_id` = %d AND comment_id = %d;", 
-                                                    $comment_id, $comment_id, $read_viewedAuthorId, $comment_id);
+                                                    $comment_id, $comment_id, $_SESSION["user_id"], $comment_id);
 
                                     $result = $connection->query($query);
 

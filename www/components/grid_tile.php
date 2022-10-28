@@ -12,7 +12,7 @@
         <div class="gridtile__author d-flex flex-column align-items-center">
                 <?php 
 
-                    echo '<span class="fs-5">' .$tile_author. '</span>';
+                    echo '<span>' .$tile_author. '</span>';
                     echo '<span class="text-secondary">' .$tile_cat. '</span>';
                     
                 ?>

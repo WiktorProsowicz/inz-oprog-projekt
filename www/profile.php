@@ -53,6 +53,10 @@
             $profile_viewed_admin = $row["admin"];
             $profile_viewed_description = htmlentities($row["description"]);
 
+            // for watching/unwatching purposes
+            $_SESSION["profile_viewedId"] = $profile_viewed_id;
+            $_SESSION["profile_viewedUsername"] = $profile_viewed_username;
+
             if($row["profile_img"] != null) {
                 $profile_viewed_profileimg = base64_encode($row["profile_img"]);
             }
@@ -63,16 +67,16 @@
             $result->free_result();
 
             // get number of posts
-            $query = sprintf("SELECT COUNT(*) FROM posts WHERE `author_id` = '%s'", $profile_viewed_username);
+            $query = sprintf("SELECT COUNT(*) FROM posts WHERE `author_id` = %d", $profile_viewed_id);
             $result = $connection->query($query);
 
             $profile_viewed_nposts = $result->fetch_array()[0];
             $result->free_result();
 
             // get number of watchers and watched by the user
-            $query = sprintf("SELECT COUNT(*) FROM watchers WHERE `user_id` = '%s'
+            $query = sprintf("SELECT COUNT(*) FROM watchers WHERE `user_id` = %d
                             UNION ALL
-                            SELECT COUNT(*) FROM watchers WHERE `watcher_id` = '%s'", $profile_viewed_username, $profile_viewed_username);
+                            SELECT COUNT(*) FROM watchers WHERE `watcher_id` = %d", $profile_viewed_id, $profile_viewed_id);
             $result = $connection->query($query);
 
             $profile_viewed_nwatchers = $result->fetch_array()[0];
@@ -221,6 +225,33 @@
                                 ?>
                             </div>
                         </li>
+
+                        <?php 
+                        
+                            if(isset($_SESSION["user_id"]) && $_SESSION["user_id"] != $profile_viewed_id) {
+
+                                $query = sprintf("SELECT * FROM watchers WHERE `user_id` = %d AND `watcher_id` = %d", $profile_viewed_id, $_SESSION["user_id"]);
+                                $result = $connection->query($query);
+
+                                if($result->num_rows == 0) {
+                                    $btn_content = '<button type="submit" name="profileWatch">Obserwuj</button>';
+                                }
+                                else {
+                                    $btn_content = '<button type="submit" name="profileUnwatch">Przestań obserwować</button>';
+                                }
+
+                                $result->free_result();
+
+                                echo '<li>
+                                        <form class="profile__watchForm" action="/user_bound_scripts.php" method="post">
+                                        '.$btn_content.'
+                                        </form>
+                                    </li>';
+
+                                
+                            }
+
+                        ?>
                         
                         <li class="mt-3">
                             <div class="d-flex justify-content-center flex-column" style="gap: 10px;">
@@ -257,7 +288,7 @@
                         <?php 
 
                             //hardcoded tiles
-                            $query = sprintf("SELECT CONCAT(SUBSTRING(p.content, 1, 200), '...'), SUBSTRING(p.title, 1, 30), c.name, p.id 
+                            $query = sprintf("SELECT CONCAT(SUBSTRING(p.content, 1, 200), '...'), p.title, c.name, p.id 
                                 FROM posts AS p JOIN categories AS c ON p.category_id = c.id 
                                 WHERE p.author_id = '%d' 
                                 ORDER BY p.modified DESC LIMIT 10;", $profile_viewed_id);
