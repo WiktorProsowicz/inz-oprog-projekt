@@ -99,4 +99,9 @@ $(document).ready(() => {
         });
     });
 
+    const authorInfo = document.querySelector(".read__authorInfo");
+    const titleHeight = document.querySelector(".read__title").getBoundingClientRect().height;
+
+    $(authorInfo).css("margin-top", (titleHeight + 30) + "px");
+
 });

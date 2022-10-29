@@ -14,3 +14,11 @@ a, a:hover {
 li::marker {
     content: "";
 }
+
+textarea::-webkit-scrollbar {
+    width: 5px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+}

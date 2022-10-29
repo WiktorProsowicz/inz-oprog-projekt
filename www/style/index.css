@@ -20,3 +20,49 @@
 .main__categoriesList li::marker {
     content: "";
 }
+
+.main__gridInner {
+    gap: 20px;
+    justify-content: center;
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .main__gridInner {
+        gap: 15px;
+        justify-content: start;
+    }
+}
+
+/* Sm devices */
+@media (max-width: 767.98px) {
+    .main {
+        margin-top: 150px !important;
+    }
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+
+    .main__grid {
+        padding: 40px 20px !important;
+    }
+
+    .main__gridInner {
+        gap: 40px;
+        justify-content: center;
+    }
+
+    h1 > span, h3 > span {
+        margin: 0 !important;
+    }
+
+    h1, h3 {
+        display: flex;
+        justify-content: center;
+    }
+
+    .main__categories {
+        display: none;
+    }
+}

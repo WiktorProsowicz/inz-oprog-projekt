@@ -26,6 +26,9 @@
             </h1>');
     }
 
+    require_once("./reset_vars.php");
+    reset_postWorkbench();
+
     $query = sprintf("SELECT `description` FROM users WHERE `username` = '%s';", $_SESSION["user_username"]);
 
     $result = $connection->query($query);

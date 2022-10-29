@@ -132,6 +132,34 @@
         exit();
     }
 
+    if(isset($_POST["readRemovedPostId"])) {
 
+        $postId = $_POST["readRemovedPostId"];
+
+        // deleting comment ratings
+        $query = sprintf("DELETE FROM comments_ratings 
+                        WHERE comment_id IN (SELECT id FROM comments WHERE post_id = %d);", $postId);
+        $connection->query($query);
+
+        // deleting post ratings
+        $query = sprintf("DELETE FROM ratings WHERE post_id = %d;", $postId);
+        $connection->query($query);
+
+        // deleting comments
+        $query = sprintf("DELETE FROM comments WHERE post_id = %d;", $postId);
+        $connection->query($query);
+
+        // deleting tag-post connection
+        $query = sprintf("DELETE FROM tags_in_posts WHERE post_id = %d;", $postId);
+        $connection->query($query);
+
+        // deleting the post
+        $query = sprintf("DELETE FROM posts WHERE id = %d;", $postId);
+        $connection->query($query);
+
+        header("Location: index.php");
+
+        exit();
+    }
 
 ?>

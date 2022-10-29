@@ -6,7 +6,8 @@
         header('Location: index.php');
     }
 
-
+    require_once("./reset_vars.php");
+    reset_postWorkbench();
 ?>
 
 <!Doctype html>

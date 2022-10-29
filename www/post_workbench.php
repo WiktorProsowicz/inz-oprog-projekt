@@ -30,7 +30,7 @@
         }
 
         else{
-            $query = sprintf("SELECT p.content, c.name, c.id, p.title FROM posts AS p JOIN categories AS c ON `p.category_id` = `c.id` WHERE `p.id` = '%d';", $_GET["p"]);
+            $query = sprintf("SELECT p.content, c.name, c.id, p.title FROM posts AS p JOIN categories AS c ON p.category_id = c.id WHERE p.id = '%d';", $_GET["p"]);
             $result = $connection->query($query);
 
             if($result->num_rows == 0){
@@ -41,7 +41,7 @@
                 $row = $result->fetch_array();
 
                 if(!isset($_SESSION["postWorkbench_currentPostContent"])) {
-                    $_SESSION["postWorkbench_surrentPostContent"] = htmlentities($row[0]);
+                    $_SESSION["postWorkbench_currentPostContent"] = htmlentities($row[0]);
                 }
 
                 if(!isset($_SESSION["postWorkbench_currentPostTitle"])) {
@@ -56,7 +56,7 @@
 
                 $result->free_result();
 
-                $query = sprintf("SELECT `t.name` FROM tags_in_posts AS tip JOIN tags AS t ON `tip.tag_id` = `t.id` WHERE `tip.post_id` = '%d';", $postWorkbench_id);
+                $query = sprintf("SELECT t.name FROM tags_in_posts AS tip JOIN tags AS t ON tip.tag_id = t.id WHERE tip.post_id = '%d';", $postWorkbench_id);
                 $result = $connection->query($query);
 
                 $tag_assoc = $result->fetch_all();
@@ -169,7 +169,7 @@
                             ?>"/>
                         </div>
                         
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between mt-4">
                             <label class="text-secondary" for="#postWorkbenchContent">Zawartość posta</label>
                             <div class="postWorkbench__contentCount text-secondary">
                                 <span>

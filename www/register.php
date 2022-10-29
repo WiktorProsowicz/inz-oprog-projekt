@@ -5,6 +5,9 @@
     if(isset($_SESSION["user_username"])) {
         header('Location: index.php');
     }
+    
+    require_once("./reset_vars.php");
+    reset_postWorkbench();
 
 
 ?>

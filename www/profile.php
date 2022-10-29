@@ -21,6 +21,9 @@
             </h1>');
     }
 
+    require_once("./reset_vars.php");
+    reset_postWorkbench();
+
     if(!isset($_GET["u"])) {
         $profile_viewed_username = "";
     }
@@ -141,7 +144,7 @@
 
         <div class="profile container-fluid">
             
-            <div class="row w-75 border border-top-0 mx-auto p-5 bg-light" style="border-radius: 0 0 50px 50px;">
+            <div class="profile__userBlock row w-75 mx-auto p-5">
 
                 <?php 
                 
@@ -178,7 +181,7 @@
                             echo '<form class="profile__profileimgForm d-flex flex-column" action="/user_bound_scripts.php" method="post" enctype="multipart/form-data"">
                                 <input id="profileImgInput" class="profile__profileimgInput" type="file" name="added_profileimg"/>
                                 <label for="profileImgInput">
-                                    <span class="badge bg-secondary p-2 d-flex align-items-center justify-content-center">
+                                    <span class="bg-secondary p-2 d-flex align-items-center justify-content-center text-light" style="border-radius: 20px;">
                                         <img src="/media/file_icon.png"/><span>Wybierz zdjęcie profilowe</span>
                                     </span>
                                 </label>
@@ -220,8 +223,17 @@
                         <li>
                             <div class="d-flex justify-content-start" style="gap: 20px;">
                                 <?php 
-                                    echo '<span>Obserwujących: <span class="text-secondary ms-3 fw-bold">'.$profile_viewed_nwatchers.'</span></span> 
-                                    <span>Obserwuje: <span class="text-secondary ms-3 fw-bold">'.$profile_viewed_nwatches.'</span></span>';
+                                    echo '<a href="/account_watchers.php?show_watching=true&u='.$profile_viewed_username.'" class="profile__infoListWatching">
+                                            <span>Obserwujących: 
+                                                <span class="text-secondary ms-3 fw-bold">'.$profile_viewed_nwatchers.'</span>
+                                            </span> 
+                                        </a>
+                                    
+                                        <a href="/account_watchers.php?show_watching=false&u='.$profile_viewed_username.'" class="profile__infoListWatching">
+                                            <span>Obserwuje: 
+                                                <span class="text-secondary ms-3 fw-bold">'.$profile_viewed_nwatches.'</span>
+                                            </span>
+                                        </a>';
                                 ?>
                             </div>
                         </li>
@@ -271,8 +283,13 @@
                 if(isset($_SESSION["user_id"]) && $profile_viewed_id == $_SESSION["user_id"]) {
                     echo '<div class="row mt-5">
 
-                        <a href="/post_workbench.php" class="profile__addNewPost d-flex justify-content-center align-items-center mx-auto rounded">
-                            <span class="me-1">Dodaj nowy post</span><img src="/media/plus_icon.png"/>
+                        <a href="/post_workbench.php" class="profile__addNewPost text-dark d-flex justify-content-center align-items-center mx-auto" style="border-radius: 20px;">
+                            <span>Dodaj nowy post</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
                         </a>
 
                     </div>';

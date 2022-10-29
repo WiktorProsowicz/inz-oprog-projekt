@@ -1,5 +1,5 @@
-<div class="w-100">
-    <div class="head d-flex justify-content-between align-items-center border-bottom">
+<div class="w-100 head-holder">
+    <div class="head d-flex justify-content-between align-items-center">
 
         <a class="head__logoHolder" href="/">
             <img src="/media/logo.png" alt="site's logo"/>
@@ -36,7 +36,7 @@
                     ';
 
                 echo '
-                    <div class="head__profilePopup">
+                    <div class="head__profilePopup border rounded">
 
                         <ul class="d-flex flex-column justify-content-center p-2">
 

@@ -5,10 +5,12 @@
     padding: 10px;
     border: 1px solid transparent;
     flex-shrink: 0;
+    box-shadow: 3px 2px 6px 1px #ddd;
 }
 
 .gridtile:hover {
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
+    box-shadow: none;
 } 
 
 .gridtile a{
@@ -19,7 +21,7 @@
     text-align: center;
     width: 100%;
     font-weight: 600;
-    height: 55px;
+    height: 70px;
     overflow: hidden;
     padding: 7px;
     border-bottom: 1px solid #ddd;

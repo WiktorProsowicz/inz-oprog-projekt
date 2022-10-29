@@ -1,0 +1,32 @@
+.search {
+    gap: 100px;
+
+}
+
+.search__grid {
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.search__paginationNav {
+    gap: 20px;
+    padding: 10px;
+    border-top: 1px solid #aaa;
+}
+
+.search__paginationLink {
+    transition: all .2s linear;
+}
+
+.search__paginationLink:hover {
+    background-color: rgba(216, 211, 204, 0.958);
+}
+
+.search__paginationLabel {
+    background-color: rgb(184, 184, 184);
+}
+
+/* 
+.search__paginationLink {
+    color: var(--bs-secondary);
+} */

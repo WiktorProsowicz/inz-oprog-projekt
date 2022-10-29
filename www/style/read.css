@@ -1,6 +1,11 @@
 .read {
     width: 85%;
     border-radius: 20px;
+    
+    box-shadow: 2px 2px 5px 1px #ddd;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,249,250,1) 100%);
+    min-height: 350px;
 }
 
 .read__mainText {
@@ -62,6 +67,19 @@
     transition: all .1s linear;
 }
 
+.read__settings {
+    gap: 7px;
+}
+
+.read__settingsEdit:hover {
+    background-color: var(--bs-secondary);
+    color: var(--bs-dark) !important;
+}
+
+.read__settingsDelete:hover {
+    background-color: var(--bs-danger);
+    color: var(--bs-dark) !important;
+}
 
 .comments {
     width: 80%;

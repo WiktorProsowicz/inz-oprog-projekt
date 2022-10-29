@@ -67,6 +67,7 @@
     border :none;
     padding: 5px;
     color: #444;
+    border-radius: 20px;
 }
 
 .profile__profileimgFormSubmit:hover {
@@ -75,6 +76,13 @@
 
 .profile > .row {
     position: relative;
+}
+
+.profile__userBlock {
+    border-radius: 0 0 50px 50px; 
+    box-shadow: 2px 2px 3px 1px #ddd;
+    /* background: rgb(255,255,255); */
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,249,250,1) 100%);
 }
 
 .profile__settingsHolder {
@@ -124,9 +132,13 @@
     border: none;
     color: black;
     gap: 10px;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .profile__watchForm button:hover {
     background-color: #ddd;
-}   
+}
+
+.profile__infoListWatching:hover {
+    opacity: .7;
+}
