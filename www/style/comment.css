@@ -1,5 +1,7 @@
 .comment {
-
+    box-shadow: 1px 1px 5px 1px #ddd;
+    /* background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,249,250,1) 100%); */
 }
 
 .comment__head {

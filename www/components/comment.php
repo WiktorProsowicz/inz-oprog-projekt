@@ -1,4 +1,4 @@
-<div id="<?php echo $comment_id;?>" class="comment bg-light p-2 rounded border">
+<div id="<?php echo $comment_id;?>" class="comment p-2 rounded">
     <div class="comment__head d-flex flex-column py-2 px-4">
         <div class="d-flex" style="gap: 10px;">
             <a href="/profile.php?u=<?php echo $comment_author;?>" class="comment__authorLink">

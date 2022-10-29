@@ -22,14 +22,14 @@
 }
 
 .main__gridInner {
-    gap: 20px;
+    gap: 25px;
     justify-content: center;
 }
 
 /* X-Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
     .main__gridInner {
-        gap: 15px;
+        gap: 25px;
         justify-content: start;
     }
 }
