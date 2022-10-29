@@ -32,12 +32,14 @@
 .login__formSubmit {
     width: 40%;
     height: 40px;
-    background-color: rgba(216, 211, 204, 0.958);
-    border: 1px solid #ccc;
-    color: #666;
+    background-color: var(--main-theme);
+    /* border: 1px solid #ccc; */
+    border: none;
+    color: var(--bs-dark);
     padding: 5px;
+    border-radius: 20px;
 }
 
 .login__formSubmit:hover {
-    background-color: #ddd;
+    background-color: var(--main-theme-light);
 }

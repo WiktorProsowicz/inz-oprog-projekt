@@ -63,15 +63,15 @@
 }
 
 .profile__profileimgFormSubmit {
-    background-color: rgba(216, 211, 204, 0.958);
+    background-color: var(--main-theme);
     border :none;
     padding: 5px;
-    color: #444;
+    color: var(--bs-dark);
     border-radius: 20px;
 }
 
 .profile__profileimgFormSubmit:hover {
-    background-color: #ddd;
+    background-color: var(--main-theme-light);
 }
 
 .profile > .row {
@@ -107,13 +107,13 @@
 .profile__addNewPost {
     width: 50%;
     padding: 10px;
-    background-color: rgba(216, 211, 204, 0.958);
-    color: black;
+    background-color: var(--main-theme);
+    color: var(--bs-dark);
     gap: 10px;
 }
 
 .profile__addNewPost:hover {
-    background-color: #ddd;
+    background-color: var(--main-theme-light);
 }
 
 .profile__addNewPost img{
@@ -128,7 +128,7 @@
 
 .profile__watchForm button{
     padding: 5px 30px;
-    background-color: rgba(216, 211, 204, 0.958);
+    background-color: var(--main-theme);
     border: none;
     color: black;
     gap: 10px;
@@ -136,7 +136,7 @@
 }
 
 .profile__watchForm button:hover {
-    background-color: #ddd;
+    background-color: var(--main-theme-light);
 }
 
 .profile__infoListWatching:hover {

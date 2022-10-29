@@ -22,3 +22,9 @@ textarea::-webkit-scrollbar {
 textarea::-webkit-scrollbar-thumb {
     background-color: #bbb;
 }
+
+:root {
+    --main-theme: #cca5a5;
+    --main-theme-light: #e6baba;
+    --main-theme-dark: #b39191;
+}
