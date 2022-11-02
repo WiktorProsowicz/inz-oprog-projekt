@@ -20,6 +20,8 @@
 
 .head__search {
     width: 100%;
+    max-width: 700px;
+    position: relative;
 }
 
 .head__searchInput {
@@ -37,14 +39,14 @@
 
 .head__searchBtn {
     /* width: 80px; */
-    /* height: 35px; */
+    height: 41px;
     /* background-color: rgba(216, 211, 204, 0.958); */
     background-color: var(--main-theme);
 
     /* border: 1px solid var(--main-theme); */
     border: none;
     color: var(--bs-dark);
-    padding: 7px 10px;
+    padding: 7px 18px 14px 14px;
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
 }
@@ -138,6 +140,48 @@
     color: #888;
 }
 
+.head__searchPopup {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    position: absolute;
+
+    background-color: var(--bs-light);
+    top: 45px;
+    /* height: 50px; */
+
+    z-index: 1000;
+}
+
+.head__searchPopupList {
+    gap: 5px;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.head__searchPopupList li {
+    width: 100%;
+}
+
+.head__searchPopupList a {
+    width: 100%;
+    display: block;
+    padding: 1px 5px;
+    border-radius: 5px;
+}
+
+.head__searchPopupList a:hover {
+    background-color: var(--main-theme-light);
+}
+
+.head__searchPopupListBold {
+    font-weight: 600;
+    color: var(--bs-dark);
+}
+
+.head__searchPopup {
+    color: var(--bs-secondary);
+}
 
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 767.98px) {

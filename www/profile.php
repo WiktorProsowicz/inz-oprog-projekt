@@ -325,6 +325,10 @@
                                 include "./components/grid_tile.php";
                             }
 
+                            if(count($tiles) == 0) {
+                                echo '<h3 class="text-secondary text-center my-3 fs-5 fw-normal">Brak postów do wyświetlenia</h3>';
+                            }
+
                         ?>
                     </div>
 

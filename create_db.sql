@@ -89,6 +89,19 @@ CREATE TABLE IF NOT EXISTS watchers (
     FOREIGN KEY (`watcher_id`) REFERENCES users(`id`)
 );
 
+CREATE TABLE IF NOT EXISTS search_queries (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT,
+    `date` DATETIME NOT NULL,
+    `query` VARCHAR(100) NOT NULL,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES users(`id`)
+);
+
+-- reset the catehories table
+-- DELETE FROM categories;
+-- ALTER TABLE categories AUTO_INCREMENT = 1;
 
 -- add hardcoded categories
 INSERT IGNORE INTO categories (`name`) VALUES 

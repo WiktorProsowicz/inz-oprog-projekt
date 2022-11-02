@@ -34,7 +34,7 @@
                         $connection->real_escape_string($_GET["c"]));
         $result = $connection->query($query);
 
-        $search__nPosts = $result->fetch_array()[0];
+        $search_nPosts = $result->fetch_array()[0];
 
         $result->free_result();
 
@@ -58,7 +58,7 @@
                         WHERE t.name = '%s';", $connection->real_escape_string($_GET["t"]));
         $result = $connection->query($query);
 
-        $search__nPosts = $result->fetch_array()[0];
+        $search_nPosts = $result->fetch_array()[0];
 
         $result->free_result();
 
@@ -80,7 +80,45 @@
     }
     else if(isset($_GET["q"])) {
 
-        //
+        // storing the query in the database
+        if(isset($_SESSION["user_id"])) {
+            $query = sprintf("INSERT INTO search_queries (`user_id`, `date`, `query`) 
+                                    VALUES (%d, '%s', SUBSTRING('%s', 1, 100));",
+                                    $_SESSION["user_id"], date("Y-m-j H:i:s", time()), $connection->real_escape_string($_GET["q"]));
+            
+            $connection->query($query);
+        }
+        else {
+            $query = sprintf("INSERT INTO search_queries (`date`, `query`) VALUES ('%s', SUBSTRING('%s', 1, 100));",
+                            date("Y-m-j H:i:s", time()), $connection->real_escape_string($_GET["1"]));
+            
+            $connection->query($query);
+        }
+
+        $search_nPosts = 0;
+
+        $tokens = explode(" ", $_GET["q"]);
+        $tokens = array_diff($tokens, array(""));
+        $tokens = array_unique($tokens);
+
+        $collected_userIds = array();
+
+        foreach($tokens as $token) {
+            $query = sprintf("SELECT id FROM users WHERE username LIKE '%%%s%%';", $connection->real_escape_string($token));
+            $result = $connection->query($query);
+
+            if($result->num_rows > 0) {
+                foreach($result->fetch_all() as $row) array_push($collected_userIds, $row[0]);
+            }
+
+            $result->free_result();
+        }
+        
+        $collected_userIds = array_slice(array_unique($collected_userIds), 0, 10);
+
+        
+
+        $search_valid = true;
 
     }
     else{
@@ -143,8 +181,11 @@
                     else if(isset($_GET["t"])) {
                         echo '<span class="fw-light me-2">Posty z tagiem</span>' . $_GET["t"];
                     }
+                    else if(isset($_GET["q"])) {
+                        echo '<span class="fw-light me-2">Wyniki zapytania</span>' . $_GET["q"];
+                    }
 
-                    echo '<span class="fw-light ms-5">('.$search__nPosts.')</span>';
+                    echo '<span class="fw-light ms-5">('.$search_nPosts.')</span>';
 
                 ?></h1>
 
@@ -173,6 +214,9 @@
                             else if(isset($_GET["t"])) {
                                 echo "t=" . $_GET["t"];
                             }
+                            else if(isset($_GET["q"])) {
+                                echo "q=" . $_GET["q"];
+                            }
 
 
                             if($search_page > 0) echo "&p=" . ($search_page - 1);
@@ -191,6 +235,9 @@
                                 else if(isset($_GET["t"])) {
                                     $url = "/search.php?t=" . $_GET["t"] . "&p=" . ($search_page - 1);
                                 }
+                                else if(isset($_GET["q"])) {
+                                    $url = "/search.php?q=" . $_GET["q"] . "&p=" . ($search_page - 1);
+                                }
 
                                 echo '<a href="'.$url.'"><span class="search__paginationLink p-1 rounded">'.$search_page.'</span></a>';
                             }
@@ -201,11 +248,11 @@
                         ?></span>
 
                         <?php
-                            if($search__nPosts % $search_postsLimit == 0){
-                                $dest_page = intdiv($search__nPosts, $search_postsLimit) - 1;
+                            if($search_nPosts % $search_postsLimit == 0){
+                                $dest_page = intdiv($search_nPosts, $search_postsLimit) - 1;
                             }
                             else {
-                                $dest_page = intdiv($search__nPosts, $search_postsLimit);
+                                $dest_page = intdiv($search_nPosts, $search_postsLimit);
                             }
 
                             if($search_page < $dest_page) {
@@ -215,6 +262,9 @@
                                 }
                                 else if(isset($_GET["t"])) {
                                     $url = "/search.php?t=" . $_GET["t"] . "&p=" . ($search_page + 1);
+                                }
+                                else if(isset($_GET["q"])) {
+                                    $url = "/search.php?q=" . $_GET["q"] . "&p=" . ($search_page + 1);
                                 }
 
                                 echo '<a href="'.$url.'"><span class="search__paginationLink p-1 rounded">'.($search_page + 2).'</span></a>';
@@ -228,19 +278,22 @@
                             else if(isset($_GET["t"])) {
                                 echo "t=" . $_GET["t"];
                             }
+                            else if(isset($_GET["q"])) {
+                                echo "q=" . $_GET["q"];
+                            }
 
                             echo "&p=" . ($search_page + 1);
 
                         ?>" <?php
                             
-                            if($search__nPosts == 0){
+                            if($search_nPosts == 0){
                                 $dest_page = 0;
                             }
-                            else if($search__nPosts % $search_postsLimit == 0){
-                                $dest_page = intdiv($search__nPosts, $search_postsLimit) - 1;
+                            else if($search_nPosts % $search_postsLimit == 0){
+                                $dest_page = intdiv($search_nPosts, $search_postsLimit) - 1;
                             }
                             else {
-                                $dest_page = intdiv($search__nPosts, $search_postsLimit);
+                                $dest_page = intdiv($search_nPosts, $search_postsLimit);
                             }
                             
                             if($search_page == $dest_page) echo 'class="link-secondary pe-none" tabindex=-1" style="opacity: .5;"';
