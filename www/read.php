@@ -192,7 +192,7 @@
                             
                             <span class="align-self-center">
                                 <a href="/profile.php?u=<?php echo $read_viewedUsername;?>" class="read__authorInfoLink link-secondary fw-bold d-flex flex-column align-items-center">
-                                    <img  class="read__authorInfoImg mb-2 border rounded-pill" src="data:image/jpg;charset=utf8;base64,<?php echo $read_viewedImg;?>"/>
+                                    <img  class="read__authorInfoImg mb-2 border" src="data:image/jpg;charset=utf8;base64,<?php echo $read_viewedImg;?>"/>
                                     <?php
                                         echo '<span>' .$read_viewedUsername. '</span>';
                                     ?>

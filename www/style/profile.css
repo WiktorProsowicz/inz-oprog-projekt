@@ -1,6 +1,7 @@
 .profile__profileimg {
     width: 250px;
     max-height: 300px;
+    border-radius: 20px;
 }
 
 .profile__profileimgSpace {
@@ -27,10 +28,6 @@
     bottom: 5px;
     display: none;
     /* width: 30px; */
-}
-
-.profile__profileimgTrash {
-    
 }
 
 .profile__infoList {

@@ -65,7 +65,7 @@
                     $_SESSION["postWorkbench_currentPostTags"] = "";
 
                     foreach($tag_assoc as $tag){
-                        $_SESSION["postWorkbench_currentPostTags"] += " " + $tag[0];
+                        $_SESSION["postWorkbench_currentPostTags"] = $_SESSION["postWorkbench_currentPostTags"].$tag[0]." ";
                     }
                 }
                 
@@ -140,7 +140,7 @@
 
         <div class="container-fluid p-5">
 
-            <div class="postWorkbench bg-light border mx-auto">
+            <div class="postWorkbench bg-light mx-auto">
 
                 <span class="postWorkbench__turnBack badge bg-secondary">
                     <a href="/profile.php?u=<?php echo $_SESSION["user_username"];?>">Wróć</a>

@@ -95,14 +95,14 @@
             $connection->query($query);
         }
 
-        $search_nPosts = 0;
 
+        // get unique tokens
         $tokens = explode(" ", $_GET["q"]);
         $tokens = array_diff($tokens, array(""));
         $tokens = array_unique($tokens);
 
+        // collect user ids
         $collected_userIds = array();
-
         foreach($tokens as $token) {
             $query = sprintf("SELECT id FROM users WHERE username LIKE '%%%s%%';", $connection->real_escape_string($token));
             $result = $connection->query($query);
@@ -116,7 +116,56 @@
         
         $collected_userIds = array_slice(array_unique($collected_userIds), 0, 10);
 
-        
+        $query_in_array = "";
+        for($i = 0; $i < count($collected_userIds); $i += 1) {
+            $query_in_array = $query_in_array . $collected_userIds[$i];
+            if($i < count($collected_userIds) - 1) $query_in_array = $query_in_array . ",";
+        }
+        if($query_in_array == "") $query_in_array = "-1";
+
+        $query = sprintf("SELECT username, profile_img FROM users WHERE id IN (%s);", $query_in_array);
+        $result = $connection->query($query);
+
+        $search_users = $result->fetch_all(MYSQLI_ASSOC);
+
+        $result->free_result();
+
+
+        // collect post ids
+        $collected_postIds = array();
+        foreach($tokens as $token) {
+            $query = sprintf("SELECT p.id
+                FROM tags_in_posts tip JOIN posts p ON p.id = tip.post_id JOIN tags t ON t.id = tip.tag_id
+                WHERE t.name = '%s';", 
+                $connection->real_escape_string($token));
+
+            $result = $connection->query($query);
+
+            if($result->num_rows > 0) {
+                foreach($result->fetch_all() as $row) array_push($collected_postIds, $row[0]);
+            }
+
+            $result->free_result();
+        }
+
+        $search_nPosts = count(array_unique($collected_postIds));
+        $collected_postIds = array_slice(array_unique($collected_postIds), $search_page, $search_postsLimit);
+
+        $query_in_array = "";
+        for($i = 0; $i < count($collected_postIds); $i += 1) {
+            $query_in_array = $query_in_array . $collected_postIds[$i];
+            if($i < count($collected_postIds) - 1) $query_in_array = $query_in_array . ",";
+        }
+        if($query_in_array == "") $query_in_array = "-1";
+
+        $query = sprintf("SELECT p.title AS title, p.id AS id, c.name AS category, CONCAT(SUBSTRING(p.content, 1, 200), '...') AS short, u.username AS author
+                        FROM posts p JOIN users u ON u.id = p.author_id JOIN categories c ON c.id = p.category_id
+                        WHERE p.id IN (%s);", $query_in_array);
+
+        $result = $connection->query($query);
+        $search_rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        $result->free_result();
 
         $search_valid = true;
 
@@ -189,20 +238,56 @@
 
                 ?></h1>
 
-                <div class="search__grid d-flex justify-content-center">
+                <?php 
+                    if(isset($search_users) && count($search_users) > 0) {
+                        echo '<div class="search__users p-3 d-flex flex-column">';
+                        echo '  <h3 class="text-secondary fw-normal fs-4">Użytkownicy:</h3>';
+                        echo '  <div class="search__usersList d-flex flex-wrap">';
+                        foreach($search_users as $search_user) {
 
+                            if($search_user["profile_img"] == null) {
+                                $img_tag = '<img src="/media/user_profile_template.png"/>';
+                            }
+                            else {
+                                $img_tag = '<img src="data:image/jpg;charset=utf8;base64,'.base64_encode($search_user["profile_img"]).'" />';
+                            }
+
+                            echo '<div class="search__usersTile ">
+                                    <a href="/profile.php?u='.$search_user["username"].'" class="d-flex flex-column align-items-center justify-content-center">
+                                '.$img_tag.'
+                                <span style="font-size: 1.1em;">'.$search_user["username"].'</span>
+                                    </a>
+                            </div>';
+                        }
+                        echo '  </div>';
+                        echo '</div>';
+                    }
+                ?>
+                
+                <div class="search__gridHolder">
                     <?php 
-                        foreach($search_rows as $row) {
-                            $tile_short = $row["short"];
-                            $tile_title = $row["title"];
-                            $tile_cat = $row["category"];
-                            $tile_id = $row["id"];
-                            $tile_author = $row["author"];
-
-                            include "./components/grid_tile.php";
+                        if(isset($search_users) && count($search_users) > 0 && count($search_rows) > 0) {
+                            echo '<div class="p-3">
+                                    <h3 class="text-secondary fw-normal fs-4" style="margin-left:40px;">Posty:</h3>
+                                </div>';
                         }
                     ?>
 
+                    <div class="search__grid d-flex justify-content-center">
+
+                        <?php 
+                            foreach($search_rows as $row) {
+                                $tile_short = $row["short"];
+                                $tile_title = $row["title"];
+                                $tile_cat = $row["category"];
+                                $tile_id = $row["id"];
+                                $tile_author = $row["author"];
+
+                                include "./components/grid_tile.php";
+                            }
+                        ?>
+
+                    </div>
                 </div>
 
                 <div class="search__pagination mt-auto mb-0 d-flex justify-content-center">

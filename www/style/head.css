@@ -31,6 +31,7 @@
     border: solid #ccc 1px;
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
+    z-index: 999;
 } 
 
 .head__searchInput:focus {

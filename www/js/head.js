@@ -3,6 +3,8 @@ $(document).ready(() => {
     const searchInput = document.querySelector(".head__searchInput");
     const searchPopup = document.querySelector(".head__searchPopup");
 
+    const search = document.querySelector(".head__search");
+
     $(searchBtn).addClass("pe-none");
     $(searchBtn).attr("tabindex", -1);
     $(searchBtn).css("opacity", .8);
@@ -23,10 +25,6 @@ $(document).ready(() => {
             $(searchBtn).attr("tabindex", 0);
             $(searchBtn).css("opacity", 1);
 
-
-            $(searchPopup).show();
-            $(searchPopup).css("width", searchInput.getBoundingClientRect().width + "px");
-
             data = {
                 "q": $(searchInput).val()
             }
@@ -38,7 +36,16 @@ $(document).ready(() => {
                 url: phpLink,
                 data: data,
                 success: (lines) => {
-                    $(".head__searchPopupList").html(lines);
+
+                    if(lines === "") {
+                        $(searchPopup).hide();
+                    }
+                    else {
+                        $(searchPopup).show();
+                        $(searchPopup).css("width", searchInput.getBoundingClientRect().width + "px");
+                        $(".head__searchPopupList").html(lines);
+                    }
+
                     // console.log(lines);
                 }
             });

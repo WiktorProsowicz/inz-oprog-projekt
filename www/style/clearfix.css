@@ -24,7 +24,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 :root {
-    --main-theme: #cca5a5;
-    --main-theme-light: #e6baba;
+    --main-theme: #c9b5b5;
+    --main-theme-light: #e6cfcf;
     --main-theme-dark: #b39191;
 }

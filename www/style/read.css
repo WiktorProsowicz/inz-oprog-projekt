@@ -34,6 +34,7 @@
 .read__authorInfoImg {
     max-width: 70%;
     transition: all .1s linear;
+    border-radius: 20px;
 }
 
 .read__rating {
