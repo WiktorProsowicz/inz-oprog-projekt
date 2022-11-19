@@ -39,7 +39,7 @@
 }
 
 .postWorkbench__contentCount {
-    width: 100px;
+    /* width: 100px; */
     padding: 5px;
 }
 
@@ -81,7 +81,7 @@
 }
 
 .postWorkbench__submit {
-    height: 35px;
+    /* height: 35px; */
     background-color: var(--main-theme);
     border: 1px solid #ccc;
     color: var(--bs-dark);

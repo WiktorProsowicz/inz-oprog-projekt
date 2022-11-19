@@ -32,6 +32,7 @@
 
 .profile__infoList {
     gap: 20px;
+    margin: 0px;
 }
 
 .profile__profileimgHolder {
@@ -88,6 +89,8 @@
     top: 10px;
     width: 30px;
     height: 30px;
+    display: inline;
+    margin: 0;
     padding: 0;
     transition: all .1s linear;
 }
@@ -96,9 +99,11 @@
     transform: scale(1.1);
 }
 
-.profile__settingsHolder  img {
+.profile__settingsHolder img {
     width: 100%;
     height: 100%;
+    /* width: 30px;
+    height: 30px; */
 }
 
 .profile__addNewPost {
@@ -138,4 +143,22 @@
 
 .profile__infoListWatching:hover {
     opacity: .7;
+}
+
+.profile__infoListWatching > span{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    row-gap: 0px;
+}
+
+.profile__infoListWatching span {
+    text-align: center;
+}
+
+@media (max-width: 1199.98px) {
+    .profile__infoList {
+        margin-top: 50px;
+    }
 }

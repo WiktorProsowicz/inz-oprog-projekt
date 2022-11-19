@@ -142,9 +142,9 @@
             }
         ?>
 
-        <div class="profile container-fluid">
+        <div class="profile container-fluid" style="margin: 0px !important;">
             
-            <div class="profile__userBlock row w-75 mx-auto p-5">
+            <div class="profile__userBlock row w-75 mx-auto p-1 p-md-5">
 
                 <?php 
                 
@@ -156,7 +156,7 @@
                 
                 ?>
 
-                <div class="profile__profileimgHolder col-md-6 d-flex flex-column justify-content-start align-items-center">
+                <div class="profile__profileimgHolder col-12 col-xl-6 d-flex flex-column justify-content-center justify-content-xl-start align-items-center">
                     <?php 
                         if($profile_viewed_profileimg == null){
                             echo '<img src="/media/user_profile_template.png" class="profile__profileimg" />'; 
@@ -197,7 +197,7 @@
                     ?>
                 </div>
 
-                <div class="col-md-6 d-flex align-items-center">
+                <div class="col-12 mt-xl-3 col-xl-6 d-flex align-items-center justify-content-center justify-content-xl-start">
                     
                     <ul class="profile__infoList d-flex flex-column">
                         <li><h3><?php 
@@ -224,14 +224,16 @@
                             <div class="d-flex justify-content-start" style="gap: 20px;">
                                 <?php 
                                     echo '<a href="/account_watchers.php?show_watching=true&u='.$profile_viewed_username.'" class="profile__infoListWatching">
-                                            <span>Obserwujących: 
-                                                <span class="text-secondary ms-3 fw-bold">'.$profile_viewed_nwatchers.'</span>
+                                            <span>
+                                                <span>Obserwujących:</span>
+                                                <span class="text-secondary fw-bold">'.$profile_viewed_nwatchers.'</span>
                                             </span> 
                                         </a>
                                     
                                         <a href="/account_watchers.php?show_watching=false&u='.$profile_viewed_username.'" class="profile__infoListWatching">
-                                            <span>Obserwuje: 
-                                                <span class="text-secondary ms-3 fw-bold">'.$profile_viewed_nwatches.'</span>
+                                            <span>
+                                                <span>Obserwuje:</span> 
+                                                <span class="text-secondary fw-bold">'.$profile_viewed_nwatches.'</span>
                                             </span>
                                         </a>';
                                 ?>

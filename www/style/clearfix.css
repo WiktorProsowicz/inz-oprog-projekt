@@ -1,3 +1,28 @@
+@font-face {
+    font-family: "OpenSans";
+    src: url("/fonts/OpenSans-Regular.ttf");
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "OpenSans";
+    src: url("/fonts/OpenSans-Light.ttf");
+    font-style: normal;
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "OpenSans";
+    src: url("/fonts/OpenSans-Bold.ttf");
+    font-style: normal;
+    font-weight: 700;
+}
+
+body {
+    font-family: 'OpenSans', sans-serif;
+}
+
 a {
     text-decoration: none !important;
 }
@@ -21,6 +46,10 @@ textarea::-webkit-scrollbar {
 
 textarea::-webkit-scrollbar-thumb {
     background-color: #bbb;
+}
+
+textarea, input {
+    font-weight: 300;
 }
 
 :root {

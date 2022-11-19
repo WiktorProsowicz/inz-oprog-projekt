@@ -4,14 +4,14 @@
     
     box-shadow: 2px 2px 5px 1px #ddd;
     background: rgb(255,255,255);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,249,250,1) 100%);
+    background: linear-gradient(180deg, rgba(248,249,250,1) 0%, rgba(255,255,255,1) 50%, rgba(248,249,250,1) 100%);
     min-height: 350px;
 }
 
 .read__mainText {
     background-color: white;
     border-radius: 10px;
-
+    color: #333;
 }
 
 .read__left {
@@ -24,7 +24,7 @@
 
 .read__authorInfo {
     gap: 5px;
-    
+    max-width: 300px;
 }
 
 .read__authorInfoLink:hover .read__authorInfoImg{

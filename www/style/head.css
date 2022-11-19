@@ -8,6 +8,7 @@
     background-color: white;
 }
 
+
 .head__logoHolder img{
     object-fit: contain;
     height: 70px;
@@ -87,7 +88,7 @@
     object-fit: contain;
     height: 50px;
     max-width: 70px;
-    border-radius: 10%;
+    border-radius: 10px;
 }
 
 .head__profileName {

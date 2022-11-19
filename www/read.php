@@ -158,9 +158,9 @@
 
             <div class="read mx-auto">
 
-                <div class="row p-5">
+                <div class="row pe-3 p-5">
 
-                    <div class="read__left col-10 d-flex flex-column">
+                    <div class="read__left col-lg-9 col-12 d-flex flex-column">
 
                         <div class="read__title">
 
@@ -183,7 +183,7 @@
                         </div>
                     </div>
 
-                    <div class="read__right col-2 d-flex flex-column justify-content-start">
+                    <div class="read__right col-12 col-lg-3 d-flex flex-column justify-content-start align-items-center">
 
                         <div class="read__authorInfo d-flex flex-column">
 
