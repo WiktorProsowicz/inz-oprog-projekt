@@ -8,6 +8,7 @@
 
     require_once("./reset_vars.php");
     reset_postWorkbench();
+    reset_read();
 ?>
 
 <!Doctype html>

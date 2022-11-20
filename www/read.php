@@ -35,7 +35,7 @@
         $read_viewedId = $_GET["p"];
 
         // get primary info about the post
-        $query = sprintf("SELECT p.title as title, p.content as content, u.username as username, u.profile_img as profile_img, u.id as userid
+        $query = sprintf("SELECT p.title as title, p.content as content, u.username as username, u.profile_img as profile_img, u.id as userid, c.name AS category
                         FROM posts AS p JOIN categories AS c ON p.category_id = c.id JOIN users AS u ON u.id = p.author_id 
                         WHERE p.id = %d;", $read_viewedId);
         $result = $connection->query($query);
@@ -59,12 +59,22 @@
         $read_viewedContent = htmlentities($row["content"]);
         $read_viewedUsername = $row["username"];
         $read_viewedAuthorId = $row["userid"];
+        $read_viewedCategory = $row["category"];
 
         if($row["profile_img"] != null) {
             $read_viewedImg = base64_encode($row["profile_img"]);
         }
         else {
             $read_viewedImg = null;
+        }
+
+        $read_commentsInterval = 2; // defines the initial limit and number of additional loaded comments
+
+        if(!isset($_SESSION["read_commentsLimit"])) {
+            $_SESSION["read_commentsLimit"] = $read_commentsInterval;
+        }
+        else if(isset($_POST["read_commentsLimit"])){
+            $_SESSION["read_commentsLimit"] = $_POST["read_commentsLimit"];
         }
 
 
@@ -88,12 +98,12 @@
             $user_rating_islike = $result->fetch_array()[0];
 
             if($user_rating_islike == 1) {
-                $likes_class = "text-primary";
+                $likes_class = "text-main-theme-dark";
                 $dislikes_class = "";
             }
             else {
                 $likes_class = "";
-                $dislikes_class = "text-primary";
+                $dislikes_class = "text-main-theme-dark";
             }
         }
 
@@ -105,9 +115,9 @@
 
         $rows = $result->fetch_all();
 
-        $read_viewedTagsIds = array();
+        $read_viewedTagsNames = array();
         foreach($rows as $row) {
-            array_push($read_viewedTagsIds, $row[0]);
+            array_push($read_viewedTagsNames, $row[0]);
         }
     }
 
@@ -154,7 +164,7 @@
             require "./components/head.php";
         ?>
 
-        <div class="container-fluid pt-5 px-5">
+        <div class="read-holder container-fluid pt-5 px-5">
 
             <div class="read mx-auto">
 
@@ -166,6 +176,8 @@
 
                             <h1 class="fs-4 text-center"><?php echo $read_viewedTitle;?></h1>
 
+                            <h3 class="fs-5 text-center text-secondary"><?php echo $read_viewedCategory; ?></h3>
+
                         </div>
 
                         <div class="read__mainText border p-3">
@@ -176,7 +188,7 @@
 
                         <div class="read__tags d-flex">
                             <?php 
-                                foreach($read_viewedTagsIds as $tag) {
+                                foreach($read_viewedTagsNames as $tag) {
                                     echo '<a href="/search.php?t='.$tag.'" class="read__tagsTag"><span class="rounded">'.$tag.'</span></a>';
                                 }
                             ?>
@@ -192,7 +204,16 @@
                             
                             <span class="align-self-center">
                                 <a href="/profile.php?u=<?php echo $read_viewedUsername;?>" class="read__authorInfoLink link-secondary fw-bold d-flex flex-column align-items-center">
-                                    <img  class="read__authorInfoImg mb-2 border" src="data:image/jpg;charset=utf8;base64,<?php echo $read_viewedImg;?>"/>
+                                    
+                                    <?php 
+                                        if($read_viewedImg != null) {
+                                            echo '<img class="read__authorInfoImg mb-2 border" src="data:image/jpg;charset=utf8;base64,'.$read_viewedImg.'"/>';
+
+                                        }
+                                        else {
+                                            echo '<img class="read__authorInfoImg mb-2" style="max-width: 120px;" src="/media/user_profile_template.png"/>';
+                                        }
+                                    ?>
                                     <?php
                                         echo '<span>' .$read_viewedUsername. '</span>';
                                     ?>
@@ -222,10 +243,11 @@
                             </div>
 
                             <?php 
-                            
+                                // displaying settings
                                 if(isset($_SESSION["user_username"]) && $_SESSION["user_id"] == $read_viewedAuthorId) {
                                     echo '<div class="read__settings d-flex flex-column justify-content-center align-items-center mt-3">
                                             <form action="/post_workbench.php" method="get">
+
                                                 <input style="display:none" tabindex="-1" name="p" value="'.$read_viewedId.'"/>
                                                 <button type="submit" class="read__settingsEdit py-1 px-5 rounded border border-secondary text-secondary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -235,12 +257,14 @@
                                             </form>
 
                                             <form action="/post_bound_scripts.php" method="post">
+
                                                 <input style="display:none" tabindex="-1" name="readRemovedPostId" value="'.$read_viewedId.'"/>
-                                                <button type="submit" name="" class="read__settingsDelete py-1 px-5 rounded border border-danger text-danger">
+                                                <button type="submit" name="" class="read__settingsDelete py-1 px-5 rounded border-main-theme-darker border text-main-theme-darker">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                                                     </svg>
                                                 </button>
+
                                             </form>
                                         </div>';
                                 }
@@ -309,7 +333,7 @@
                             <?php 
 
                                 $query = sprintf("SELECT c.content, u.username, c.created, c.id FROM comments c JOIN users u ON c.author_id = u.id 
-                                                WHERE post_id = %d ORDER BY created DESC;", $read_viewedId);
+                                                WHERE post_id = %d ORDER BY created DESC LIMIT %d;", $read_viewedId, $_SESSION["read_commentsLimit"]);
                                 $result = $connection->query($query);
 
                                 $rows = $result->fetch_all();
@@ -342,18 +366,34 @@
                                         $user_rating_islike = $result->fetch_array()[0];
                             
                                         if($user_rating_islike == 1) {
-                                            $comment_likes_class = "text-primary";
+                                            $comment_likes_class = "text-main-theme-dark";
                                             $comment_dislikes_class = "";
                                         }
                                         else {
                                             $comment_likes_class = "";
-                                            $comment_dislikes_class = "text-primary";
+                                            $comment_dislikes_class = "text-main-theme-dark";
                                         }
                                     }
 
                                     $result->free_result();
 
                                     include "./components/comment.php";
+                                }
+
+                                // display a button if there are more comments than current limit
+                                $query = sprintf("SELECT COUNT(*) FROM comments WHERE post_id = %d;", $read_viewedId);
+                                $result = $connection->query($query);
+
+                                $read_nAllComments = $result->fetch_row()[0];
+                                $result->free_result();
+
+                                if($read_nAllComments > $_SESSION["read_commentsLimit"]) {
+                                    echo '<form class="read__moreComments" action="/read.php?p='.$read_viewedId.'" method="post">
+
+                                            <input style="display: none;" name="read_commentsLimit" value="'.($_SESSION["read_commentsLimit"] + $read_commentsInterval).'"/>
+                                            <button type="submit">Więcej komentarzy</button>
+
+                                         </form>';
                                 }
 
                             ?>

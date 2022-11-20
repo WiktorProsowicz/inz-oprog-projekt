@@ -17,6 +17,7 @@
 
     require_once("./reset_vars.php");
     reset_postWorkbench();
+    reset_read();
 
     if(isset($_GET["p"])) {
         $search_page = $_GET["p"];
@@ -90,7 +91,7 @@
         }
         else {
             $query = sprintf("INSERT INTO search_queries (`date`, `query`) VALUES ('%s', SUBSTRING('%s', 1, 100));",
-                            date("Y-m-j H:i:s", time()), $connection->real_escape_string($_GET["1"]));
+                            date("Y-m-j H:i:s", time()), $connection->real_escape_string($_GET["q"]));
             
             $connection->query($query);
         }
@@ -133,11 +134,12 @@
 
         // collect post ids
         $collected_postIds = array();
+
         foreach($tokens as $token) {
             $query = sprintf("SELECT p.id
-                FROM tags_in_posts tip JOIN posts p ON p.id = tip.post_id JOIN tags t ON t.id = tip.tag_id
-                WHERE t.name = '%s';", 
-                $connection->real_escape_string($token));
+                FROM tags_in_posts tip JOIN posts p ON p.id = tip.post_id JOIN tags t ON t.id = tip.tag_id JOIN categories c ON c.id = p.category_id 
+                WHERE t.name = '%s' OR c.name = '%s';", 
+                $connection->real_escape_string($token), $connection->real_escape_string($token));
 
             $result = $connection->query($query);
 
@@ -147,6 +149,20 @@
 
             $result->free_result();
         }
+
+        // get post ids with similar title as the query
+        $query = sprintf("SELECT id, ABS(LENGTH('%s')) / LENGTH(title) AS perc_acc FROM posts
+        WHERE title LIKE '%%%s%%' OR '%s' =''AND ABS(LENGTH('%s')) / LENGTH(title) >= .4
+        ORDER BY perc_acc DESC;", 
+        $connection->real_escape_string($_GET["q"]), $connection->real_escape_string($_GET["q"]), 
+        $connection->real_escape_string($_GET["q"]), $connection->real_escape_string($_GET["q"]));
+
+        $result = $connection->query($query);
+
+        if($result->num_rows > 0) foreach($result->fetch_all() as $row) {
+            array_push($collected_postIds, $row[0]);
+        }
+        $result->free_result();
 
         $search_nPosts = count(array_unique($collected_postIds));
         $collected_postIds = array_slice(array_unique($collected_postIds), $search_page, $search_postsLimit);
@@ -174,6 +190,18 @@
         $search_valid = false;
     }
 
+    if($search_valid && $search_postsLimit * ($search_page+1) > $search_nPosts + $search_postsLimit) {
+        if(isset($_GET["c"])) {
+            header("Location: search.php?c=" . $_GET["c"]);
+        }
+        else if(isset($_GET["t"])) {
+            header("Location: search.php?t=" . $_GET["t"]);
+        }
+        else if(isset($_GET["q"])) {
+            header("Location: search.php?q=" . $_GET["q"]);
+        }
+        exit();
+    }
 
 ?>
 

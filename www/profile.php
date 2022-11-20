@@ -23,6 +23,7 @@
 
     require_once("./reset_vars.php");
     reset_postWorkbench();
+    reset_read();
 
     if(!isset($_GET["u"])) {
         $profile_viewed_username = "";
@@ -117,6 +118,7 @@
         <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <script src="/js/profile.js"></script>
+        <script src="/js/grid_tile.js"></script>
 
         <!-- custom stylesheets -->
         <link href="/style/clearfix.css" rel="stylesheet"/>
@@ -156,7 +158,7 @@
                 
                 ?>
 
-                <div class="profile__profileimgHolder col-12 col-xl-6 d-flex flex-column justify-content-center justify-content-xl-start align-items-center">
+                <div class="profile__profileimgHolder col-12 col-xl-6 d-flex flex-column justify-content-center align-items-center">
                     <?php 
                         if($profile_viewed_profileimg == null){
                             echo '<img src="/media/user_profile_template.png" class="profile__profileimg" />'; 

@@ -9,7 +9,7 @@
 
         <div class="head__search">
             <form action="/search.php" method="get" class="d-flex align-items-center">
-                <input type="text" placeholder="wpisz tag, kategorię" name="q" class="head__searchInput" autocomplete="off" tabindex="0"/>
+                <input type="text" placeholder="wpisz tag, kategorię, tytuł" name="q" class="head__searchInput" autocomplete="off" tabindex="0"/>
 
                 <button type="submit" value="Wyszukaj" class="head__searchBtn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">

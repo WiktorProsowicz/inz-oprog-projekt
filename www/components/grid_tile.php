@@ -5,8 +5,10 @@
             <?php echo $tile_title; ?>
         </span>
 
-        <span class="gridtile__content text-secondary">
-            <?php echo $tile_short; ?>
+        <span class="gridtile__content text-secondary w-100">
+            <span>
+            <?php echo str_replace("\n", "<br>", $tile_short); ?>
+            </span>
         </span>
 
         <div class="gridtile__author d-flex flex-column align-items-center">

@@ -6,6 +6,7 @@
     /* background-color: rgba(240, 240, 240, .5); */
     box-shadow: 1px 1px 3px 1px #ddd;
     background-color: white;
+    z-index: 999;
 }
 
 
@@ -110,9 +111,9 @@
     width: 150px;
     top:  50px;
     right: 0px;
-    background-color: white;
     display: none;
-    background-color: var(--bs-light);
+    /* background-color: var(--bs-light); */
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,249,250,1) 100%);
     z-index: 1000;
     /* border: 1px solid #ccc; */
 }

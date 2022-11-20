@@ -53,6 +53,9 @@ $(document).ready(() => {
     })
 
     $(searchInput).on("blur", () => {
-        $(searchPopup).hide();
+        setTimeout(() => {
+            $(".head__SearchPopupList").empty();
+            $(searchPopup).hide();
+        }, 300);
     });
 });

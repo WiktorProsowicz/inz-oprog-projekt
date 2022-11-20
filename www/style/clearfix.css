@@ -40,13 +40,14 @@ li::marker {
     content: "";
 }
 
-textarea::-webkit-scrollbar {
-    width: 5px;
+textarea::-webkit-scrollbar, div::-webkit-scrollbar, span::-webkit-scrollbar {
+    width: 6px;
 }
 
-textarea::-webkit-scrollbar-thumb {
+textarea::-webkit-scrollbar-thumb, div::-webkit-scrollbar-thumb, span::-webkit-scrollbar-thumb {
     background-color: #bbb;
 }
+
 
 textarea, input {
     font-weight: 300;
@@ -56,4 +57,17 @@ textarea, input {
     --main-theme: #c9b5b5;
     --main-theme-light: #e6cfcf;
     --main-theme-dark: #b39191;
+    --main-theme-darker: #796363;
+}
+
+.text-main-theme-dark {
+    color: var(--main-theme-dark)
+}
+
+.text-main-theme-darker {
+    color: var(--main-theme-darker)
+}
+
+.border-main-theme-darker {
+    border-color: var(--main-theme-darker) !important;
 }

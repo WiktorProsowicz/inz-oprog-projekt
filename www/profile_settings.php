@@ -28,6 +28,7 @@
 
     require_once("./reset_vars.php");
     reset_postWorkbench();
+    reset_read();
 
     $query = sprintf("SELECT `description` FROM users WHERE `username` = '%s';", $_SESSION["user_username"]);
 

@@ -22,6 +22,7 @@
 
     require_once("./reset_vars.php");
     reset_postWorkbench();
+    reset_read();
 
 ?>
 
@@ -48,6 +49,9 @@
         <!-- offline downloaded bootstrap files for developement -->
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- custom js -->
+        <script src="/js/grid_tile.js"></script>
 
         <!-- custom stylesheets -->
         <link href="/style/clearfix.css" rel="stylesheet"/>

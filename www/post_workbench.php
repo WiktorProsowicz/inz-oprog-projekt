@@ -3,6 +3,9 @@
     session_start();
 
     require_once("./connect.php");
+    require_once("./reset_vars.php");
+
+    reset_read();
 
     try {
         $connection = connect_to_database();
@@ -52,7 +55,7 @@
                 $postWorkbench__category = $row[1];
                 $postWorkbench__categoryId = $row[2];
 
-                $_SESSION["postWorkbench__currentPostId"] = $postWorkbench__categoryId;
+                $_SESSION["postWorkbench_currentPostId"] = $postWorkbench_id;
 
                 $result->free_result();
 

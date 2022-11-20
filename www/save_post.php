@@ -104,9 +104,9 @@
 
     // inserting post
     if(isset($_SESSION["postWorkbench_currentPostId"])) {
-        $query = sprintf("UPDATE posts SET `content` = '%s', `modified` = '%s', `category_id` = %d, `title` = '%s';", 
+        $query = sprintf("UPDATE posts SET `content` = '%s', `modified` = '%s', `category_id` = %d, `title` = '%s' WHERE id = %d;", 
                     $connection->real_escape_string($_SESSION["postWorkbench_currentPostContent"]), date("Y-m-j H:i:s", time()), $chosen_category_id, 
-                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostTitle"]));
+                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostTitle"]), $_SESSION["postWorkbench_currentPostId"]) ;
         $connection->query($query);
     }
     else {
@@ -121,9 +121,13 @@
         $_SESSION["postWorkbench_currentPostId"] = $connection->insert_id;
     }
 
+    // removing all post_tag relationship
+    $query = sprintf("DELETE FROM tags_in_posts WHERE `post_id` = %d;", $_SESSION["postWorkbench_currentPostId"]);
+    $connection->query($query);
+
     // inserting post-tag relationship
     foreach($collected_tags_ids as $tag_id) {
-        $query = sprintf("INSERT IGNORE INTO tags_in_posts (`tag_id`, `post_id`) VALUES (%d, %d);", $tag_id, $_SESSION["postWorkbench_currentPostId"]);
+        $query = sprintf("INSERT INTO tags_in_posts (`tag_id`, `post_id`) VALUES (%d, %d);", $tag_id, $_SESSION["postWorkbench_currentPostId"]);
         $connection->query($query);
     }
 
