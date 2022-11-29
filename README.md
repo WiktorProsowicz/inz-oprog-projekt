@@ -14,3 +14,6 @@ DocumentRoot "E:/WebdevProjects/inz-oprog-projekt/www"
 
 Link do pdf: https://docs.google.com/document/d/1a1Rsoo7Wda-RQ_0_lh_RWtJ_ZsS_F8lzs3wOswj8tJQ/edit?usp=sharing  
 Dalem edycje dla kazdego kto ma link wiec nie wysylajcie komus komu nie ufacie xdd
+
+### UML
+https://docs.google.com/document/d/1GmnanXzJIBAjMfTIU2h_G_3E_Vk6XQsiZER_4n2oOeg/edit?usp=sharing
