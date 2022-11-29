@@ -18,3 +18,6 @@ https://lucid.app/lucidchart/8e9a8cf7-c2b2-47ad-91fd-54ea23ee2ed0/edit?viewport_
 
 ### Diagramy stanów 
 https://lucid.app/lucidchart/108d5408-2d96-436e-b2fe-bb583b4d0f30/edit?viewport_loc=-277%2C-245%2C2123%2C1068%2CoRQ~NdMYEf7.&invitationId=inv_185d34b4-b7e7-4760-850a-4021ef6f3c32
+
+### Diagram klas -- jesli cos checie dodac to pobierzcie plik i otworzcie tutaj: https://app.diagrams.net/
+https://drive.google.com/file/d/1y7Emj2o6pCv7xUD5SSjrHBO97hkvRY1p/view?usp=sharing
