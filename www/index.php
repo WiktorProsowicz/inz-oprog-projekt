@@ -41,7 +41,7 @@
 
         <link rel="icon" href="/media/logo.png" >
 
-        <title>Forum ziomeczków - strona główna</title>
+        <title>Szniorum - strona główna</title>
 
         <!-- offline downloaded jquery files for developement-->
         <script src="/jquery/jquery-3.6.1.min.js"></script>

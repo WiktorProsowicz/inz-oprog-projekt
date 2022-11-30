@@ -105,15 +105,22 @@
     // inserting post
     if(isset($_SESSION["postWorkbench_currentPostId"])) {
         $query = sprintf("UPDATE posts SET `content` = '%s', `modified` = '%s', `category_id` = %d, `title` = '%s' WHERE id = %d;", 
-                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostContent"]), date("Y-m-j H:i:s", time()), $chosen_category_id, 
-                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostTitle"]), $_SESSION["postWorkbench_currentPostId"]) ;
+                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostContent"]),
+                    date("Y-m-j H:i:s", time()),
+                    $chosen_category_id, 
+                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostTitle"]),
+                    $_SESSION["postWorkbench_currentPostId"]) ;
+        
         $connection->query($query);
     }
     else {
         $query = sprintf("INSERT INTO posts (`author_id`, `content`,`created`, `modified`, `category_id`, `title`)
                     VALUES (%d, '%s', '%s', '%s', %d, '%s');", 
-                    $_SESSION["user_id"], $connection->real_escape_string($_SESSION["postWorkbench_currentPostContent"]), 
-                    date("Y-m-j H:i:s", time()), date("Y-m-j H:i:s", time()), $chosen_category_id, 
+                    $_SESSION["user_id"],
+                    $connection->real_escape_string($_SESSION["postWorkbench_currentPostContent"]), 
+                    date("Y-m-j H:i:s", time()),
+                    date("Y-m-j H:i:s", time()),
+                    $chosen_category_id, 
                     $connection->real_escape_string($_SESSION["postWorkbench_currentPostTitle"]));
 
             $connection->query($query);

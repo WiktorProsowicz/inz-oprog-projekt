@@ -14,6 +14,8 @@
 
     function reset_read() {
         unset($_SESSION["read_commentsLimit"]);
+        unset($_SESSION["read_currentViewedPost"]);
+        unset($_SESSION["read_addedComment"]);
     }
 
 ?>

@@ -108,7 +108,7 @@
 
         <link rel="icon" href="/media/logo.png" >
 
-        <title><?php echo $profile_viewed_username . " - Forum ziomeczków";?></title>
+        <title><?php echo $profile_viewed_username . " - Szniorum";?></title>
 
         <!-- offline downloaded jquery files for developement-->
         <script src="/jquery/jquery-3.6.1.min.js"></script>

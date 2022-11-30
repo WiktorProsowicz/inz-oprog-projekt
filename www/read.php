@@ -49,7 +49,21 @@
         }
 
         // for rating purposes
-        $_SESSION["read_currentViewedPost"] = $read_viewedId;
+        if(!isset($_SESSION["read_currentViewedPost"]) || $_SESSION["read_currentViewedPost"] != $read_viewedId) {
+            $_SESSION["read_currentViewedPost"] = $read_viewedId;
+            if(isset($_SESSION["user_id"]))
+                $viewer_id = $_SESSION["user_id"];
+            else
+                $viewer_id = null;
+
+            // for standard post view (i.e. not when returning after writing a comment)
+            $query = sprintf("INSERT INTO post_views (`user_id`, `post_id`, `date`) VALUES (%d, %d, '%s');",
+                            $viewer_id,
+                            $read_viewedId,
+                            date("Y-m-j H:i:s", time()));
+            $connection->query($query);
+        }
+
 
         $row = $result->fetch_assoc();
         $result->free_result();
@@ -60,6 +74,13 @@
         $read_viewedUsername = $row["username"];
         $read_viewedAuthorId = $row["userid"];
         $read_viewedCategory = $row["category"];
+
+        // get views
+        $query = sprintf("SELECT COUNT(*) FROM post_views WHERE post_id = %d;", 
+                        $read_viewedId);
+        $result = $connection->query($query);
+
+        $read_viewedViews = $result->fetch_array()[0];
 
         if($row["profile_img"] != null) {
             $read_viewedImg = base64_encode($row["profile_img"]);
@@ -240,6 +261,18 @@
                                     </a>
                                 </div>
 
+                            </div>
+
+                            <div class="read__views d-flex justify-content-center align-items-center w-100 mt-1">
+                                <span class="text-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                    </svg>
+                                </span>
+                                <span class="text-secondary">
+                                    <?php echo $read_viewedViews; ?>
+                                </span>
                             </div>
 
                             <?php 

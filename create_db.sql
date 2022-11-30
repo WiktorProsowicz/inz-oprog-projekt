@@ -99,6 +99,15 @@ CREATE TABLE IF NOT EXISTS search_queries (
     FOREIGN KEY (`user_id`) REFERENCES users(`id`)
 );
 
+CREATE TABLE IF NOT EXISTS post_views (
+    `post_id` INT NOT NULL,
+    `user_id` INT,
+    `date` DATETIME NOT NULL,
+
+    FOREIGN KEY (`post_id`) REFERENCES posts(`id`),
+    FOREIGN KEY (`user_id`) REFERENCES users(`id`)
+);
+
 -- reset the catehories table
 -- DELETE FROM categories;
 -- ALTER TABLE categories AUTO_INCREMENT = 1;

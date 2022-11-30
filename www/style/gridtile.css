@@ -37,14 +37,15 @@
     text-align: center;
     width: 100%;
     font-weight: 600;
-    height: 70px;
+    /* height: 80px; */
     overflow: hidden;
     padding: 7px;
     border-bottom: 1px solid #ddd;
 }
 
 .gridtile__content {
-    height: 180px;
+    max-height: 180px;
+    min-height: 120px;
     font-size: .8em;
     overflow: hidden;
     position: relative;

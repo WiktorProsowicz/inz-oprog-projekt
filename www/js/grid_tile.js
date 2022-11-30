@@ -14,8 +14,10 @@ $(document).ready(() => {
                 if(isHover(tile)) {
                     const contentHeight = tile.querySelector(".gridtile__content").getBoundingClientRect().height;
                     const spanHeight = tile.querySelector(".gridtile__content span").getBoundingClientRect().height;
-    
-                    $(textSpan).animate({"top": -(spanHeight - contentHeight) + "px"}, (spanHeight - contentHeight) * 30, "linear");
+                    
+                    if(spanHeight > contentHeight) {
+                        $(textSpan).animate({"top": -(spanHeight - contentHeight) + "px"}, (spanHeight - contentHeight) * 30, "linear");
+                    }
                     
                     throw BreakCommand;
                 }   
