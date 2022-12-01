@@ -17,3 +17,7 @@ Dalem edycje dla kazdego kto ma link wiec nie wysylajcie komus komu nie ufacie x
 
 ### UML
 https://docs.google.com/document/d/1GmnanXzJIBAjMfTIU2h_G_3E_Vk6XQsiZER_4n2oOeg/edit?usp=sharing
+
+
+### kompletny projekt systemu 
+https://docs.google.com/document/d/1hCnP3IzxLcflTDh9K7aE78gQU2rzwhC9P3JpReZdbtM/edit#
