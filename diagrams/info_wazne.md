@@ -21,3 +21,7 @@ https://lucid.app/lucidchart/108d5408-2d96-436e-b2fe-bb583b4d0f30/edit?viewport_
 
 ### Diagram klas -- jesli cos checie dodac to pobierzcie plik i otworzcie tutaj: https://app.diagrams.net/
 https://drive.google.com/file/d/1y7Emj2o6pCv7xUD5SSjrHBO97hkvRY1p/view?usp=sharing
+
+
+### diagramy systemu i tech stack
+https://lucid.app/lucidchart/82f12786-6f55-471c-83db-a54cc65b4d3b/edit?invitationId=inv_042897a9-b64b-4986-b00f-dcecb9ab9f86&page=L-EaUuxDhRcj#
