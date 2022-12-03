@@ -2,6 +2,9 @@
     box-shadow: 1px 1px 5px 1px #ddd;
     /* background: rgb(255,255,255);
     background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,249,250,1) 100%); */
+    position: relative;
+    transition: all .5s linear;
+    overflow: hidden;
 }
 
 .comment__head {
@@ -14,4 +17,43 @@
 
 .comment__rating {
     gap: 10px;
+}
+
+.comment__content {
+    
+}
+
+.comment__toggleBtnHolder {
+    width: 160px;
+    position: absolute;
+    bottom: 10px;
+    right: 0px;
+}
+
+.comment__toggleBtnArrow {
+    transition: all .1s linear;
+}
+
+
+.comment__toggleBtn {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #aaa;
+}
+
+.comment__toggleBtn:hover {
+    color: #777;
+}
+
+.comment__folded {
+    max-height: 200px;
+    
+}
+
+.comment__folded .comment__toggleBtnArrow {
+    transform: rotate(180deg);
 }

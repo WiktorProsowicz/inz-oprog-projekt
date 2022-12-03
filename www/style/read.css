@@ -141,6 +141,15 @@
     gap: 10px;
 }
 
+.read__categoryHeader {
+    transition: all .07s linear;
+    display: block;
+}
+
+.read__categoryHeader:hover {
+    transform: scale(1.1);
+}
+
 @media (max-width: 767.98px) {
     .read {
         margin-top: 150px;

@@ -108,6 +108,32 @@ CREATE TABLE IF NOT EXISTS post_views (
     FOREIGN KEY (`user_id`) REFERENCES users(`id`)
 );
 
+CREATE TABLE IF NOT EXISTS notifications (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `author_id` INT NOT NULL,
+    `recipient_id` INT NOT NULL,
+    `content` VARCHAR(500) NOT NULL,
+    `high_priority` BOOLEAN NOT NULL,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`author_id`) REFERENCES users(`id`),
+    FOREIGN KEY (`recipient_id`) REFERENCES users(`id`)  
+);
+
+CREATE TABLE IF NOT EXISTS reports (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `author_id` INT NOT NULL,
+    `post_id` INT,
+    `comment_id` INT,
+    `user_id` INT,
+    `content` VARCHAR(200) NOT NULL,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`author_id`) REFERENCES users(`id`),
+    FOREIGN KEY (`comment_id`) REFERENCES comments(`id`),
+    FOREIGN KEY (`user_id`) REFERENCES users(`id`)
+);
+
 -- reset the catehories table
 -- DELETE FROM categories;
 -- ALTER TABLE categories AUTO_INCREMENT = 1;

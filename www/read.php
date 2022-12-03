@@ -197,7 +197,11 @@
 
                             <h1 class="fs-4 text-center"><?php echo $read_viewedTitle;?></h1>
 
-                            <h3 class="fs-5 text-center text-secondary"><?php echo $read_viewedCategory; ?></h3>
+                            <h3 class="fs-5 text-center text-secondary">
+                                <a href="search.php?c=<?php echo $read_viewedCategory;?>" class="read__categoryHeader">
+                                    <?php echo $read_viewedCategory; ?>
+                                </a>
+                            </h3>
 
                         </div>
 

@@ -47,6 +47,17 @@ $(document).ready(() => {
         $(".comments__addCommentCounter").html(contentAreaText + " / 1500");
     });
 
+    const toggleComment = (comment) => {
+        if($(comment).hasClass("comment__folded")) {
+            $(comment.querySelector(".comment__toggleBtn span")).html("pokaż mniej");
+        }
+        else {
+            $(comment.querySelector(".comment__toggleBtn span")).html("pokaż więcej");
+        }
+
+        $(comment).toggleClass("comment__folded");
+    };
+
     const comments = document.querySelectorAll(".comment");
 
     comments.forEach((comment) => {
@@ -97,6 +108,21 @@ $(document).ready(() => {
               });
     
         });
+
+        $(comment).ready(() => {
+
+            if(comment.getBoundingClientRect().height > 200) {
+                $(comment.querySelector(".comment__toggleBtn")).on("click", () => {
+                    toggleComment(comment);
+                });
+                toggleComment(comment);
+            }
+            else {
+                comment.querySelector(".comment__toggleBtnHolder").style.display = "none";
+            }
+
+        });
+
     });
 
     const authorInfo = document.querySelector(".read__authorInfo");

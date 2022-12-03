@@ -52,9 +52,6 @@
     display: none;
 }
 
-.profile__profileimgInput {
-    color: var(--bs-secondary);
-}
 
 .profile__profileimgForm {
     gap: 10px;
@@ -66,6 +63,7 @@
     padding: 5px;
     color: var(--bs-dark);
     border-radius: 20px;
+    font-weight: 500;
 }
 
 .profile__profileimgFormSubmit:hover {

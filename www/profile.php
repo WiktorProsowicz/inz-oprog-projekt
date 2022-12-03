@@ -181,13 +181,13 @@
 
                         if(isset($_SESSION["user_id"]) && $profile_viewed_id == $_SESSION["user_id"]) {
                             echo '<form class="profile__profileimgForm d-flex flex-column" action="/user_bound_scripts.php" method="post" enctype="multipart/form-data"">
-                                <input id="profileImgInput" class="profile__profileimgInput" type="file" name="added_profileimg"/>
-                                <label for="profileImgInput">
-                                    <span class="bg-secondary p-2 d-flex align-items-center justify-content-center text-light" style="border-radius: 20px;">
-                                        <img src="/media/file_icon.png"/><span>Wybierz zdjęcie profilowe</span>
-                                    </span>
-                                </label>
-                                <input type="submit" name="add_profileimg_submit" value="Zastosuj" class="profile__profileimgFormSubmit"/>';
+                                    <input id="profileImgInput" class="profile__profileimgInput" type="file" name="added_profileimg"/>
+                                    <label for="profileImgInput">
+                                        <span class="bg-secondary p-2 d-flex align-items-center justify-content-center text-light" style="border-radius: 20px;">
+                                            <img src="/media/file_icon.png"/><span>Wybierz zdjęcie profilowe</span>
+                                        </span>
+                                    </label>
+                                    <input type="submit" name="add_profileimg_submit" value="Zastosuj" class="profile__profileimgFormSubmit"/>';
                             
                             if(isset($_SESSION["profile_imgmsg"])) {
                                 echo '<span class="text-danger">' .$_SESSION["profile_imgmsg"]. '</span>';

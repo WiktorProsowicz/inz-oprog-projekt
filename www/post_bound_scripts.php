@@ -128,7 +128,7 @@
                 $connection->query($query);
             }
         }
-
+        
         exit();
     }
 
@@ -151,6 +151,10 @@
 
         // deleting tag-post connection
         $query = sprintf("DELETE FROM tags_in_posts WHERE post_id = %d;", $postId);
+        $connection->query($query);
+
+        // deleting post views
+        $query = sprintf("DELETE FROM post_views WHERE post_id = %d;", $postId);
         $connection->query($query);
 
         // deleting the post
