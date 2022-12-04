@@ -123,11 +123,91 @@ $(document).ready(() => {
 
         });
 
+
+        const commentReport = comment.querySelector(".comment__commentReport");
+        if(commentReport !== null) {
+            const commentReportInput = comment.querySelector(".comment__commentReportContent");
+            const commentReportBtn = comment.querySelector(".comment__commentReportBtn");
+
+            const checkCommentReportInput = () => {
+
+                const inputValue = $(commentReportInput).val();
+                
+
+                if(inputValue.length == 0) {
+                    $(commentReportBtn).addClass("pe-none");
+                    $(commentReportBtn).attr("tabindex", -1);
+                    $(commentReportBtn).css("opacity", .8);
+                }
+                else {
+                    $(commentReportBtn).removeClass("pe-none");
+                    $(commentReportBtn).attr("tabindex", 0);
+                    $(commentReportBtn).css("opacity", 1);
+
+                    if(inputValue.length > 200) {
+                        $(commentReportInput).val(inputValue.substring(0, 200))
+                    }
+                }
+
+            };
+
+            $(commentReportInput).on("input", () => {checkCommentReportInput()});
+            checkCommentReportInput();
+
+            const commentReportIcon = comment.querySelector(".comment__commentReportIcon");
+            const commentReportPopup = comment.querySelector(".comment__commentReportPopup");
+
+            $(commentReportIcon).on("click", () => {
+                $(commentReportPopup).toggleClass("comment__commentReportPopup-hidden");
+            });
+        }
+
     });
 
     const authorInfo = document.querySelector(".read__authorInfo");
     const titleHeight = document.querySelector(".read__title").getBoundingClientRect().height;
 
     $(authorInfo).css("margin-top", (titleHeight + 30) + "px");
+
+    const postReport = document.querySelector(".read__postReport");
+    if(postReport !== null) {
+
+        const postReportInput = document.querySelector(".read__postReportContent");
+        const postReportBtn = document.querySelector(".read__postReportBtn");
+
+        const checkReportInput = () => {
+
+            const inputValue = $(postReportInput).val();
+            
+
+            if(inputValue.length == 0) {
+                $(postReportBtn).addClass("pe-none");
+                $(postReportBtn).attr("tabindex", -1);
+                $(postReportBtn).css("opacity", .8);
+            }
+            else {
+                $(postReportBtn).removeClass("pe-none");
+                $(postReportBtn).attr("tabindex", 0);
+                $(postReportBtn).css("opacity", 1);
+
+                if(inputValue.length > 200) {
+                    $(postReportInput).val(inputValue.substring(0, 200))
+                }
+            }
+
+        };
+
+        $(postReportInput).on("input", () => {checkReportInput()});
+        checkReportInput();
+
+        const postReportIcon = document.querySelector(".read__postReportIcon");
+        const postReportPopup = document.querySelector(".read__postReportPopup");
+
+        $(postReportIcon).on("click", () => {
+            $(postReportPopup).toggleClass("read__postReportPopup-hidden");
+        });
+    }
+
+    
 
 });

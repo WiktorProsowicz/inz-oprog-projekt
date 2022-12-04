@@ -51,16 +51,20 @@
         // for rating purposes
         if(!isset($_SESSION["read_currentViewedPost"]) || $_SESSION["read_currentViewedPost"] != $read_viewedId) {
             $_SESSION["read_currentViewedPost"] = $read_viewedId;
-            if(isset($_SESSION["user_id"]))
-                $viewer_id = $_SESSION["user_id"];
-            else
-                $viewer_id = null;
+            if(isset($_SESSION["user_id"])){
 
-            // for standard post view (i.e. not when returning after writing a comment)
-            $query = sprintf("INSERT INTO post_views (`user_id`, `post_id`, `date`) VALUES (%d, %d, '%s');",
-                            $viewer_id,
-                            $read_viewedId,
-                            date("Y-m-j H:i:s", time()));
+                // for standard post view (i.e. not when returning after writing a comment)
+                $query = sprintf("INSERT INTO post_views (`user_id`, `post_id`, `date`) VALUES (%d, %d, '%s');",
+                                $_SESSION["user_id"],
+                                $read_viewedId,
+                                date("Y-m-j H:i:s", time()));
+            }
+            else {
+                $query = sprintf("INSERT INTO post_views (`post_id`, `date`) VALUES (%d, '%s');",
+                        $read_viewedId,
+                        date("Y-m-j H:i:s", time()));
+            }
+
             $connection->query($query);
         }
 
@@ -98,13 +102,17 @@
             $_SESSION["read_commentsLimit"] = $_POST["read_commentsLimit"];
         }
 
+        if(isset($_SESSION["user_id"]))
+            $viewer_id = $_SESSION["user_id"];
+        else
+            $viewer_id = null;
 
         // get ratings
         $query = sprintf("SELECT COUNT(*) FROM ratings WHERE post_id = %d AND is_like = true
                         UNION ALL
                         SELECT COUNT(*) FROM ratings WHERE post_id = %d AND is_like = false
                         UNION ALL
-                        SELECT is_like FROM ratings WHERE `user_id` = %d AND post_id = %d;", $read_viewedId, $read_viewedId, $_SESSION["user_id"], $read_viewedId);
+                        SELECT is_like FROM ratings WHERE `user_id` = %d AND post_id = %d;", $read_viewedId, $read_viewedId, $viewer_id, $read_viewedId);
 
         $result = $connection->query($query);
 
@@ -189,7 +197,45 @@
 
             <div class="read mx-auto">
 
-                <div class="row pe-3 p-5">
+                <div class="row pe-3 p-5 position-relative">
+
+                    <?php 
+                        $user_watching = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : null;
+                        if($read_viewedAuthorId !== $user_watching) {
+                            echo '<div class="read__postReport">
+                                        <button class="read__postReportIcon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-flag" viewBox="0 0 16 16">
+                                                <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"/>
+                                            </svg>
+                                        </button>';
+                                    
+                            if(isset($_SESSION["read_reportpostmsg"])) {
+
+                                echo '<div class="read__postReportMessage">
+                                        <span class="text-danger">'.$_SESSION["read_reportpostmsg"].'</span>
+                                    </div>';
+
+                                unset($_SESSION["read_reportpostmsg"]);
+                            }
+                                    
+                            echo    '<div class="read__postReportPopup read__postReportPopup-hidden flex-column justify-content-center align-items-center">
+
+                                        <h3><span class="text-dark">Powód zgłoszenia:</span></h3>
+
+                                        <form method="POST" action="notifications_bound_scripts.php" class="d-flex justify-content-center">
+                                            <input name="readPostReportId" value="'.$read_viewedId.'" tabindex="-1" style="display: none;"/>
+                                            <input type="text" name="readPostReportContent" class="read__postReportContent"/>
+                                                
+                                            <button type="submit" class="read__postReportBtn" name="readPostReport">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-flag-fill" viewBox="0 0 16 16">
+                                                    <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>';
+                        }
+                    ?>
 
                     <div class="read__left col-lg-9 col-12 d-flex flex-column">
 
@@ -205,7 +251,7 @@
 
                         </div>
 
-                        <div class="read__mainText border p-3">
+                        <div class="read__mainText p-3">
 
                             <?php echo str_replace("\n", "<br>", $read_viewedContent);?>
 
@@ -240,7 +286,7 @@
                                         }
                                     ?>
                                     <?php
-                                        echo '<span>' .$read_viewedUsername. '</span>';
+                                        echo '<span>' . $read_viewedUsername. '</span>';
                                     ?>
                                 </a>
                             </span>
@@ -369,7 +415,7 @@
 
                             <?php 
 
-                                $query = sprintf("SELECT c.content, u.username, c.created, c.id FROM comments c JOIN users u ON c.author_id = u.id 
+                                $query = sprintf("SELECT c.content, u.username, c.created, c.id, u.id FROM comments c JOIN users u ON c.author_id = u.id 
                                                 WHERE post_id = %d ORDER BY created DESC LIMIT %d;", $read_viewedId, $_SESSION["read_commentsLimit"]);
                                 $result = $connection->query($query);
 
@@ -381,6 +427,7 @@
                                     $comment_author = $row[1];
                                     $comment_date = $row[2];
                                     $comment_id = $row[3];
+                                    $comment_authorId = $row[4];
 
                                     // get ratings
                                     $query = sprintf("SELECT COUNT(*) FROM comments_ratings WHERE comment_id = %d AND is_like = true
@@ -411,6 +458,13 @@
                                             $comment_dislikes_class = "text-main-theme-dark";
                                         }
                                     }
+
+                                    $user_watching = isset($_SESSION["user_id"]) ? $_SESSION["user_id"] : null;
+
+                                    if($user_watching !== $comment_authorId) {
+                                        $comment_enableReporting = true;
+                                    }
+                                    else $comment_enableReporting = false;
 
                                     $result->free_result();
 

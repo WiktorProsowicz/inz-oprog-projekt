@@ -114,6 +114,8 @@ CREATE TABLE IF NOT EXISTS notifications (
     `recipient_id` INT NOT NULL,
     `content` VARCHAR(500) NOT NULL,
     `high_priority` BOOLEAN NOT NULL,
+    `watched` BOOLEAN NOT NULL,
+    `date` DATETIME NOT NULL,
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author_id`) REFERENCES users(`id`),
@@ -127,6 +129,7 @@ CREATE TABLE IF NOT EXISTS reports (
     `comment_id` INT,
     `user_id` INT,
     `content` VARCHAR(200) NOT NULL,
+    `date` DATETIME NOT NULL,
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`author_id`) REFERENCES users(`id`),
