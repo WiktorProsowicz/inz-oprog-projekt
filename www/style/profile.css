@@ -155,6 +155,84 @@
     text-align: center;
 }
 
+.profile__userReport {
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 25px;
+    height: 25px;
+}
+
+.profile__userReportIcon {
+    border: none;
+    background-color: transparent;
+    color: var(--bs-dark);
+    transition: all .07s linear;
+}
+
+.profile__userReportIcon:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.profile__userReportMessage {
+    position: absolute;
+    width: 270px;
+    font-size: .7em;
+    top: 0px;
+    left: 55px;
+    text-align: center;
+
+}
+
+.profile__userReportPopup {
+    display: flex;
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    box-shadow: 1px 1px 2px 1px #eee;
+    background-color: var(--main-theme-light);
+    top: 35px;
+    border-radius: 20px;
+}
+
+.profile__userReportPopup h3 {
+    font-size: .8em;
+    padding-left: 20px;
+}
+
+.profile__userReportPopup-hidden {
+    display: none !important;
+}
+
+.profile__userReportContent {
+    width: 100%;
+    height: 30px;
+    font-size: .8em;
+    padding: 10px 15px;
+    border: solid #ccc 1px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.profile__userReportBtn {
+    height: 30px;
+    border: 1px solid var(--main-theme-dark);
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: transparent;
+    color: var(--main-theme-darker);
+}
+
+.profile__userReportBtn:hover {
+    background-color: var(--main-theme-dark);
+}
+
+.profile__userReportContent:focus {
+    outline: solid #aaa 1px;
+}
+
 @media (max-width: 767.98px) {
     .profile__userBlock {
         margin-top: 150px;
