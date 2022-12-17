@@ -48,27 +48,6 @@
             </h1>');
         }
 
-        // for rating purposes
-        if(!isset($_SESSION["read_currentViewedPost"]) || $_SESSION["read_currentViewedPost"] != $read_viewedId) {
-            $_SESSION["read_currentViewedPost"] = $read_viewedId;
-            if(isset($_SESSION["user_id"])){
-
-                // for standard post view (i.e. not when returning after writing a comment)
-                $query = sprintf("INSERT INTO post_views (`user_id`, `post_id`, `date`) VALUES (%d, %d, '%s');",
-                                $_SESSION["user_id"],
-                                $read_viewedId,
-                                date("Y-m-j H:i:s", time()));
-            }
-            else {
-                $query = sprintf("INSERT INTO post_views (`post_id`, `date`) VALUES (%d, '%s');",
-                        $read_viewedId,
-                        date("Y-m-j H:i:s", time()));
-            }
-
-            $connection->query($query);
-        }
-
-
         $row = $result->fetch_assoc();
         $result->free_result();
 
@@ -78,6 +57,31 @@
         $read_viewedUsername = $row["username"];
         $read_viewedAuthorId = $row["userid"];
         $read_viewedCategory = $row["category"];
+
+        // for rating purposes
+        if(!isset($_SESSION["read_currentViewedPost"]) || $_SESSION["read_currentViewedPost"] != $read_viewedId) {
+            $_SESSION["read_currentViewedPost"] = $read_viewedId;
+            if(isset($_SESSION["user_id"])){
+
+                if($_SESSION["user_id"] != $read_viewedAuthorId) {
+                    // for standard post view (i.e. not when returning after writing a comment)
+                    $query = sprintf("INSERT INTO post_views (`user_id`, `post_id`, `date`) VALUES (%d, %d, '%s');",
+                    $_SESSION["user_id"],
+                    $read_viewedId,
+                    date("Y-m-j H:i:s", time()));
+                    $connection->query($query);
+                }
+                
+            }
+            else {
+                $query = sprintf("INSERT INTO post_views (`post_id`, `date`) VALUES (%d, '%s');",
+                        $read_viewedId,
+                        date("Y-m-j H:i:s", time()));
+                $connection->query($query);
+            }
+
+            
+        }
 
         // get views
         $query = sprintf("SELECT COUNT(*) FROM post_views WHERE post_id = %d;", 
