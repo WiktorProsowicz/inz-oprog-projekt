@@ -143,15 +143,18 @@ CREATE TABLE IF NOT EXISTS reports (
 
 -- add hardcoded categories
 INSERT IGNORE INTO categories (`name`) VALUES 
-('Opowiadania erotyczne'),
+('Historia'),
+('Informatyka'),
+('Recenzje'),
+('Sport'),
+('Rozrywka'),
+('Nauka'),
 ('Fanfiki'),
 ('Kawały'),
 ('Informacje'),
 ('Poezja'),
 ('Proza'),
 ('Gore'),
-('Gnioooo'),
-('Szniooooo'),
 ('Tutoriale'),
 ('Lifehacki'),
 ('Inne');

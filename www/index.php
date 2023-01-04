@@ -84,7 +84,7 @@
                         foreach($categories as $cat) {
                             echo '
                                 <li class="p-3 border-start border-secondary">
-                                    <a href="/search.php?c='.$cat[0].'" class="link-secondary">'
+                                    <a href="/search.php?c='.$cat[0].'" class="main__categoryLink link-secondary">'
                                         .$cat[0].
                                     '</a>
                                 </li>

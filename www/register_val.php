@@ -48,7 +48,7 @@
     if($same_username_cnt > 0) {
         $_SESSION["username_msg"] = "Użytkownik o takim loginie już istnieje.";
 
-        header("Location: register.php");;
+        header("Location: register.php");
         exit();
     }
     

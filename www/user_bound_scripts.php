@@ -1,4 +1,5 @@
 <?php 
+
     session_start();
 
     require_once "./connect.php";
@@ -71,18 +72,19 @@
 
     if(isset($_POST["profileSettings_changedDesc"])) {
 
+
         $changed_desc = $_POST["profileSettings_changedDesc"];
         $_SESSION["profileSettings_passedDesc"] = $_POST["profileSettings_changedDesc"];
 
         if(strlen($changed_desc) == 0 || strlen($changed_desc) > 500) {
             $_SESSION["profileSettings_descmsg"] = "Opis musi zawierać od 1 do 500 znaków.";
-
         }
         else {
+
             $query = sprintf("UPDATE users SET `description` = '%s' WHERE `id` = %d;", $connection->real_escape_string($changed_desc), $_SESSION["user_id"]);
             $connection->query($query);
 
-            unset($_POST["profileSettings_changedDesc"]);
+            unset($_SESSION["profileSettings_changedDesc"]);
         }
 
         unset($_POST["profileSettings_changedDesc"]);

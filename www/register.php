@@ -27,7 +27,7 @@
 
         <link rel="icon" href="/media/logo.png" >
 
-        <title>meczków - załóż konto</title>
+        <title>Szniorum - załóż konto</title>
 
         <!-- offline downloaded jquery files for developement-->
         <script src="/jquery/jquery-3.6.1.min.js"></script>

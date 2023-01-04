@@ -61,7 +61,7 @@
 
     $tagsMsgSuffix = "";
     foreach($collected_tags as $tag) {
-        if(strlen($tag) > 20) {
+        if(mb_strlen($tag, "utf-8") > 20) {
             $tagsMsgSuffix = $tagsMsgSuffix . $tag . "\n";
         }
     }
