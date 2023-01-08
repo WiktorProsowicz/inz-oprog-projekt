@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 from posts import PostGenerator
-from random import choice
+from random import choice, shuffle
 from os import path
 import requests
 
@@ -35,7 +35,7 @@ if __name__ == "__main__":
         exit(0)
     
     users_creds = [tuple(line.rstrip("\n").split(" ")) for line in lines]
-
+    shuffle(users_creds)
 
     if len(users_creds) * int(args.maxPostsPerUser) < int(args.nPosts):
         user_input = input(f"There are more posts to create than the specified limit {args.nPosts} vs {len(users_creds) * int(args.maxPostsPerUser)}.\n \
@@ -51,6 +51,10 @@ if __name__ == "__main__":
 
         # getting a new user
         if post_index % int(args.maxPostsPerUser) == 0:
+            
+            if not users_creds:
+                break
+
             u_login, u_email, u_passwd = users_creds.pop(0)
 
         print(f"GenerateSynteticPosts --- saving post '{post.title}' by {u_login}")

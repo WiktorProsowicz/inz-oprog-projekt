@@ -2,11 +2,6 @@
 
     session_start();
 
-    if(!isset($_SESSION["user_username"])) {
-        header("Location: login.php");
-        exit();
-    }
-
     require_once("./connect.php");
 
     try {
@@ -22,6 +17,9 @@
 
 
     if(isset($_POST["is_like"])) {
+
+        redirect_if_not_logged();
+
         $rating_type = $_POST["is_like"];
 
         $query = sprintf("SELECT * FROM ratings WHERE `user_id` = %d AND `post_id` = %d;", $_SESSION["user_id"], $_SESSION["read_currentViewedPost"]);
@@ -67,6 +65,8 @@
 
     if(isset($_POST["commentsAdded"])) {
 
+        redirect_if_not_logged();
+
         $comment_text = $_POST["commentsAdded"];
         $_SESSION["read__addedComment"] = $comment_text;
 
@@ -87,6 +87,9 @@
     }
 
     if(isset($_POST["comment_is_like"])) {
+
+        redirect_if_not_logged();
+
         $rating_type = $_POST["comment_is_like"];
         $comment_id = intval($_POST["comment_id"]);
 
@@ -134,6 +137,8 @@
 
     if(isset($_POST["readRemovedPostId"])) {
 
+        redirect_if_not_logged();
+
         $postId = $_POST["readRemovedPostId"];
 
         // deleting comment ratings
@@ -162,6 +167,34 @@
         $connection->query($query);
 
         header("Location: index.php");
+
+        exit();
+    }
+
+
+
+
+
+    
+    // development purposes - for generating syntetic content
+    // __get_posts_ids - triggers script
+    // __limit - max number of ids
+    if(isset($_POST["__get_posts_ids"])) {
+        
+        $query = sprintf("SELECT id FROM posts LIMIT %d;", $_POST["__limit"]);
+        $result = $connection->query($query);
+
+        if($result->num_rows == 0) {
+            exit();
+        }
+
+        $rows = $result->fetch_all();
+
+        foreach($rows as $row) {
+            echo " " . $row[0];
+        }
+
+        $rows->free_result();
 
         exit();
     }

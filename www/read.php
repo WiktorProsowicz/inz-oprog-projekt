@@ -97,7 +97,7 @@
             $read_viewedImg = null;
         }
 
-        $read_commentsInterval = 2; // defines the initial limit and number of additional loaded comments
+        $read_commentsInterval = 10; // defines the initial limit and number of additional loaded comments
 
         if(!isset($_SESSION["read_commentsLimit"])) {
             $_SESSION["read_commentsLimit"] = $read_commentsInterval;

@@ -152,6 +152,7 @@ INSERT IGNORE INTO categories (`name`) VALUES
 ('Fanfiki'),
 ('Kawały'),
 ('Informacje'),
+('Opowiadania erotyczne'),
 ('Poezja'),
 ('Proza'),
 ('Gore'),

@@ -42,7 +42,13 @@ class UsersGenerator:
         soup = BeautifulSoup(r.content, "html.parser")
 
         for post_container in soup.find_all("div", {"class": "article", "data-type": "link"}, recursive=True):
-            title_link: Tag = post_container.find("h2", recursive=True).find("a")
+
+            title_link: Tag = post_container.find("h2")
+
+            if title_link is None:
+                continue
+
+            title_link = title_link.find("a")
             posts_to_traverse.append(title_link.get("href"))
 
         print(f"UsersGenerator --- traversing {len(posts_to_traverse)} posts")

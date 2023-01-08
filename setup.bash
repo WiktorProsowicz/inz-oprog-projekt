@@ -47,6 +47,8 @@ function generate_content() {
 
     _generate_posts $1 $3 3 "$HOME_PATH/.cache";
 
+    # _generate_ratings $1 $4 3 "$HOME_PATH/.cache";
+
 }
 
 # _generate_users(link, nUsers, savePath)

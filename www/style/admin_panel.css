@@ -1,0 +1,53 @@
+.adminpanel > .row:first-child {
+    border-radius: 30px;
+    box-shadow: 2px 2px 3px 1px #ddd;
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, var(--main-theme-light) 100%);
+}
+
+.adminpanel__activityStatsHead {
+    margin-bottom: 30px;
+}
+
+.adminpanel__activityStatsHeadInner {
+    display: flex;
+    margin: 0 auto;
+    width: 75%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.adminpanel__activityStatsButtons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.adminpanel__activityStatsHeadInner button {
+    padding: 5px;
+    outline: none;
+    background-color: var(--main-theme);
+    border: none;
+    color: var(--main-theme-light);
+    border-radius: 100%;
+    transition: all .1s linear;
+}
+
+.adminpanel__activityStatsHeadInner button:hover {
+    transform: scale(1.1);
+}
+
+.adminpanel__activityStatsHeadInner button:active {
+    background-color: var(--main-theme-darker);
+}
+
+.adminpanel__activityStatsBanner {
+    font-size: 1.4em;
+    color: var(--main-theme-darker);
+}
+
+.adminpanel__yearStatsBanner {
+    font-size: 1.2em;
+    color: var(--main-theme-darker);
+}
