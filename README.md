@@ -1,6 +1,9 @@
 # inz-oprog-projekt
 Group project for university classes.
 
+# Dokumentacja użytkownika
+https://ukasz11233.github.io/slate
+
 # Jak zrobić sobie setup na kompie żeby działało
 1. Pobierasz program xampp ze strony https://www.apachefriends.org/download.html
 2. Jak zainstalujesz to klikasz w panelu Apache -> Config -> httpd.conf i zmieniasz te dwie linijki żeby dać ścieżkę do swojego folderu ze skolonowanym repo np.
@@ -21,3 +24,4 @@ https://docs.google.com/document/d/1GmnanXzJIBAjMfTIU2h_G_3E_Vk6XQsiZER_4n2oOeg/
 
 ### kompletny projekt systemu 
 https://docs.google.com/document/d/1hCnP3IzxLcflTDh9K7aE78gQU2rzwhC9P3JpReZdbtM/edit#
+
