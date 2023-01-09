@@ -4,6 +4,9 @@ Group project for university classes.
 # Dokumentacja użytkownika
 https://ukasz11233.github.io/slate
 
+# Dokumentacja techniczna
+TO BE ADDED
+
 # Jak zrobić sobie setup na kompie żeby działało
 1. Pobierasz program xampp ze strony https://www.apachefriends.org/download.html
 2. Jak zainstalujesz to klikasz w panelu Apache -> Config -> httpd.conf i zmieniasz te dwie linijki żeby dać ścieżkę do swojego folderu ze skolonowanym repo np.
