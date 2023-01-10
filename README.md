@@ -5,7 +5,7 @@ Group project for university classes.
 https://ukasz11233.github.io/UserDocumentation
 
 # Dokumentacja techniczna
-TO BE ADDED
+https://ukasz11233.github.io/TechnicalDocumentation  
 
 # Jak zrobić sobie setup na kompie żeby działało
 1. Pobierasz program xampp ze strony https://www.apachefriends.org/download.html
