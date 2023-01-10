@@ -2,7 +2,7 @@
 Group project for university classes.
 
 # Dokumentacja użytkownika
-https://ukasz11233.github.io/slate
+https://ukasz11233.github.io/UserDocumentation
 
 # Dokumentacja techniczna
 TO BE ADDED
