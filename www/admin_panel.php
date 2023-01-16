@@ -97,7 +97,7 @@
 
         <!-- custom scripts -->
         <script src="/js/admin_panel.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js" integrity="sha384-XrBQI0kDtx9BrWRwpNT9b09Lwj2M8nnf2tO+zYxJ6IyROBmC05l4AdGWLt2ix1cs" crossorigin="anonymous"></script>
 
         <!-- custom stylesheets -->
         <link href="/style/clearfix.css" rel="stylesheet"/>
