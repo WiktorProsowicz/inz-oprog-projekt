@@ -58,6 +58,7 @@ textarea, input {
     --main-theme-light: #e6cfcf;
     --main-theme-dark: #b39191;
     --main-theme-darker: #796363;
+    --main-theme-lighter: #f6eeee;
 }
 
 .text-main-theme-dark {

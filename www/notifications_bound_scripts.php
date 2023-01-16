@@ -167,7 +167,61 @@
     }
 
     // reporting a user
-    
+    if(isset($_POST["profileUserReport"])) {
+        
+        $reportedId = $_POST["profileUserReportId"];
+        $reportedContent = $_POST["profileUserReportContent"];
+        $reportedUsername = $_POST["profileUserReportUsername"];
+
+        // getting interval since last report of that user from this user
+        $query = sprintf("SELECT COALESCE(EXTRACT(HOUR FROM NOW() - r.date), 0)
+                    FROM `reports` r
+                    WHERE r.user_id <=> %d AND r.author_id = %d
+                    ORDER BY 1 ASC LIMIT 1;", $reportedId, $_SESSION["user_id"]);
+
+        $result = $connection->query($query);
+
+        if($result->num_rows > 0) {
+
+            if($result->fetch_array()[0] < 24) {
+                $result->free_result();
+                $_SESSION["userreportmsg"] = "Możesz ponownie zgłosić tego użytkownika dopiero po 24 godzinach.";
+
+                header("Location: profile.php?u=" . $reportedUsername);
+                exit();
+            }
+
+            $result->free_result();
+
+        }
+
+        // inserting a report to database
+        $query = sprintf("INSERT INTO reports 
+                        (`author_id`, `user_id`, `content`, `date`) VALUES (%d, %d, '%s', NOW());",
+                        $_SESSION["user_id"], $reportedId, $reportedContent);
+        $connection->query($query);
+
+        $leastOccupiedAdminId = get_least_occupied_admin($connection);
+
+        if($leastOccupiedAdminId !== null) {
+            $content = 'Użytkownik <a href="profile.php?u='.$_SESSION["user_username"].'">'.
+                        $_SESSION["user_username"].
+                    '</a>
+                    zgłosił użytkownika <a href="profile.php?u='.$reportedUsername.'"></a>.
+                    "'.$reportedContent.'"';
+            
+            // inseritng a notification with message to admin
+            $query = sprintf("INSERT INTO notifications
+                            (`author_id`, `recipient_id`, `content`, `high_priority`, `watched`, `date`)
+                            VALUES (%d, %d, '%s', true, false, NOW());",
+                            $_SESSION["user_id"], $leastOccupiedAdminId, $connection->real_escape_string($content));
+           
+            $connection->query($query);
+        }
+        
+        header("Location: profile.php?u=" . $reportedUsername);
+        exit();
+    }
 
 
 

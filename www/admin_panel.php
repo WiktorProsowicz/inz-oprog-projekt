@@ -34,6 +34,41 @@
         exit();
     }
 
+    $adminpanel_reports_chunk_size = 20;
+
+    if(!isset($_POST["adminpanel_less_chunks"]) && !isset($_POST["adminpanel_more_chunks"])) {
+        $adminpanel_current_chunk = 0;
+    }
+    else if(isset($_POST["adminpanel_less_chunks"])) {
+        $adminpanel_current_chunk = intval($_POST["adminpanel_less_chunks"]);
+        unset($_POST["adminpanel_less_chunks"]);
+    }
+    else {
+        $adminpanel_current_chunk = intval($_POST["adminpanel_more_chunks"]);
+        unset($_POST["adminpanel_more_chunks"]);
+    }
+
+
+    // collecting reports
+    $query = sprintf("SELECT r.content AS content, r.comment_id as comment_id, r.user_id as user_id, r.post_id as post_id, 
+                        ua.username AS author_username, u.username AS user_username, SUBSTRING(p.title, 1, 10) AS post_title,
+                        SUBSTRING(c.content, 1, 70) AS comment_content, c.post_id AS comment_post_id
+                        FROM reports r
+                        JOIN users ua ON r.author_id = ua.id
+                        LEFT JOIN users u ON r.user_id = u.id
+                        LEFT JOIN comments c ON r.comment_id = c.id
+                        LEFT JOIN posts p ON r.post_id = p.id
+                        ORDER BY r.date DESC
+                        LIMIT %d
+                        OFFSET %d;",
+                    $adminpanel_reports_chunk_size,
+                    $adminpanel_reports_chunk_size * $adminpanel_current_chunk);
+
+    $result = $connection->query($query);
+
+    $adminpanel_reports = $result->fetch_all(MYSQLI_ASSOC);
+
+    $result->free_result();
 
 ?>
 
@@ -136,9 +171,125 @@
 
                     </div>
 
-                <div class="col-12 col-md-6"></div>
+                    <div class="col-12 col-md-6">
+                        <ul class="adminpanel__yearStatsList w-100 d-flex flex-column justify-content-start align-items-left p-5">
 
-            </div>
+                            <li class="adminpanel__yearStatsPosts"><h5>Ilość utworzonych postów:</h5><span></span></li>
+
+                            <li class="adminpanel__yearStatsComments"><h5>Ilość wstawionych komentarzy:</h5><span></span></li>
+
+                            <li class="adminpanel__yearStatsUsers"><h5>Ilość założonych kont:</h5><span></span></li>
+
+                            <li class="adminpanel__yearStatsReports"><h5>Ilość zgłoszeń:</h5><span></span></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="row p-3 g-1">
+                    <div class="col-12 p-3" style="position: relative;">
+
+                        <?php 
+                            // get number of all reports
+                            $query = "SELECT COUNT(*) FROM reports;";
+                            $result = $connection->query($query);
+                            $nAllReports = $result->fetch_array()[0];
+                            $result->free_result();
+
+                            $lower_bound = $adminpanel_current_chunk * $adminpanel_reports_chunk_size;
+                            $upper_bound = ($adminpanel_current_chunk + 1) * $adminpanel_reports_chunk_size;
+
+                            if($upper_bound > $nAllReports)
+                                $upper_bound = $nAllReports;
+
+                            echo '<div class="adminpanel__reportsNav">';
+                            echo '<div class="adminpanel__reportsBanner">
+                                    '.$lower_bound.' -
+                                    '.$upper_bound.' /
+                                    '.$nAllReports.'
+                                </div>';
+
+                            if($adminpanel_current_chunk > 0)
+                                echo '<form action="/admin_panel.php" method="post">
+                                        <input style="display: none;" value="'.($adminpanel_current_chunk-1).'" name="adminpanel_less_chunks"/>
+                                        <button type="submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                            </svg>
+                                        </button>
+                                    </form>';
+
+                            if($upper_bound < $nAllReports)
+                                echo '<form action="/admin_panel.php" method="post">
+                                        <input style="display: none;" value="'.($adminpanel_current_chunk+1).'" name="adminpanel_more_chunks"/>
+                                        <button type="submit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                            </svg>
+                                        </button>
+                                    </form>';
+
+                            echo '</div>';
+                        ?>
+
+                        <h2 class="adminpanel__reportsHeading d-flex justify-content-center"><span>Zgłoszenia:</span></h2>
+                        <ul class="adminpanel__reportsList d-flex flex-wrap justify-content-center w-100">
+                            <?php 
+                                foreach($adminpanel_reports as $report) {
+                                    if($report["post_id"] != null) {
+                                        echo '<li>
+                                                <div class="adminpanel__reportsItemAuthor">
+                                                    <span>Autor zgłoszenia:</span> 
+                                                    <a class="link-secondary" href="/profile.php?u='.$report["author_username"].'">'.$report["author_username"].'</a>
+                                                </div>
+                                                <div>
+                                                    <span>Zgłoszony post:</span>
+                                                    <span><a class="link-secondary" href="/read.php?p='.$report["post_id"].'">'.$report["post_title"].'...</a></span>
+                                                </div>
+                                                <div>
+                                                    <span>Powód zgłoszenia:</span>
+                                                    <span>'.$report["content"].'</span>
+                                                </div>
+                                            </li>';
+                                    }
+                                    else if($report["comment_id"] != null) {
+                                        echo '<li>
+                                                <div class="adminpanel__reportsItemAuthor">
+                                                    <span>Autor zgłoszenia:</span> 
+                                                    <a class="link-secondary" href="/profile.php?u='.$report["author_username"].'">'.$report["author_username"].'</a>
+                                                </div>
+                                                <div>
+                                                    <span>Zgłoszony komentarz:</span>
+                                                    <span><a class="link-secondary" href="/read.php?p='.$report["comment_post_id"].'#'.$report["comment_id"].'">'.$report["comment_content"].'...</a></span>
+                                                </div>
+                                                <div>
+                                                    <span>Powód zgłoszenia:</span>
+                                                    <span>'.$report["content"].'</span>
+                                                </div>
+                                            </li>';
+                                    }
+                                    else {
+                                        echo '<li>
+                                                <div class="adminpanel__reportsItemAuthor">
+                                                    <span>Autor zgłoszenia:</span> 
+                                                    <a class="link-secondary" href="/profile.php?u='.$report["author_username"].'">'.$report["author_username"].'</a>
+                                                </div>
+                                                <div>
+                                                    <span>Zgłoszony użytkownik:</span>
+                                                    <span><a class="link-secondary" href="/profile.php?u='.$report["user_username"].'">'.$report["user_username"].'</a></span>
+                                                </div>
+                                                <div>
+                                                    <span>Powód zgłoszenia:</span>
+                                                    <span>'.$report["content"].'</span>
+                                                </div>
+                                            </li>';
+                                    }
+                                }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
         
             </div>
 

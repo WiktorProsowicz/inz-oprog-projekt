@@ -58,6 +58,8 @@ function reloadChart(month, year) {
             
             const messageText = new String(msg);
 
+            const chartCanvas = document.querySelector(".adminpanel__activityStatsCanvas");
+
             let xValues = [];
             let yValues = [];
 
@@ -69,6 +71,14 @@ function reloadChart(month, year) {
                     yValues.push(dayCount[1]);
                 }
             });
+
+            // handle empty result
+            if(xValues.length == 0 && yValues.length == 0) {
+                chartCanvas.innerHTML = '<h3 class="adminpanel__emptyActivityHeading">Brak aktywności w podanym miesiącu</h3>';
+                chartCanvas.style.height = "400px";
+                return;
+            }
+
 
             const mTr = 201;
             const mTg = 181;
@@ -87,9 +97,7 @@ function reloadChart(month, year) {
                 barColors.push('rgb(' + (mTr - f*r)  + "," + (mTg - f*g)  + "," + (mTb - f*b)  + ")");
             });
 
-            // console.log(barColors);
-
-            const chartCanvas = document.querySelector(".adminpanel__activityStatsCanvas");
+            
             chartCanvas.innerHTML = "<canvas style=\"width: 100%; height: 400px\"></canvas>";
 
             const chartBanner = document.querySelector(".adminpanel__activityStatsBannerContent");
@@ -112,6 +120,13 @@ function reloadChart(month, year) {
                     plugins: {
                         legend: {
                             display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                              }
                         }
                     }
                 }
@@ -143,8 +158,8 @@ function reloadYearChart(year) {
                 const weekCount = chunk.split(" ");
 
                 if(weekCount.length == 2) {
-                    xValues.push(dayCount[0]);
-                    yValues.push(dayCount[1]);
+                    xValues.push(weekCount[0]);
+                    yValues.push(weekCount[1]);
                 }
             });
 
@@ -161,7 +176,8 @@ function reloadYearChart(year) {
                     datasets: [{
                         label: "Ilość postów utworzonych lub zmodyfikowanych",
                         data: yValues,
-                        barPercentage: 1.1
+                        borderColor: '#b39191',
+                        fill: true
                     }]
                 },
                 options: {
@@ -171,10 +187,63 @@ function reloadYearChart(year) {
                         legend: {
                             display: false
                         }
-                    }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                              }
+                        }
+                    },
+                    elements: {
+                        point: {
+                          pointRadius: 0
+                        }
+                      }
                 }
             });
+
+
         }
       });
+
+    data = {
+        fetchYearlyNumbers: true,
+        year: year
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/site_statistics.php",
+        data: data,
+        success: (msg) => {
+
+            const messageString = new String(msg);
+            const counts = messageString.split("\n");
+
+            if(counts.length < 4) {
+                return;
+            }
+
+            // collecting stats
+            const nPosts = counts[0];
+            const nComments = counts[1];
+            const nUsers = counts[2];
+            const nReports = counts[3];
+
+            // stats containers
+            const postsItem = document.querySelector(".adminpanel__yearStatsPosts span");
+            const commentsItem = document.querySelector(".adminpanel__yearStatsComments span");
+            const usersItem = document.querySelector(".adminpanel__yearStatsUsers span");
+            const reportsItem = document.querySelector(".adminpanel__yearStatsReports span");
+
+            // assigning 
+            postsItem.innerHTML = nPosts;
+            commentsItem.innerHTML = nComments;
+            usersItem.innerHTML = nUsers;
+            reportsItem.innerHTML = nReports;
+            
+        }
+    });
 
 }

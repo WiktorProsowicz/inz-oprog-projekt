@@ -43,11 +43,11 @@ function generate_content() {
 
     echo "Generating content --- $(date) - $1";
 
-    # _generate_users $1 $2 "$HOME_PATH/.cache";
+    _generate_users $1 $2 "$HOME_PATH/.cache";
 
     _generate_posts $1 $3 3 "$HOME_PATH/.cache";
 
-    # _generate_ratings $1 $4 3 "$HOME_PATH/.cache";
+    _generate_ratings $1 $4 3 "$HOME_PATH/.cache";
 
 }
 
